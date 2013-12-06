@@ -24,6 +24,7 @@ class Character {
 
   /* time since last flip */
   private double timer = 0.0;
+  int groundlevel= 320;
 
 
   public Character( ) {
@@ -47,7 +48,8 @@ class Character {
       megaman = null;
     }
 
-    x = y = 100;
+    x = 10;
+    y = groundlevel;
     dx = dy = 0;
     current = 0;
   }
@@ -84,7 +86,7 @@ class Character {
 
   /* left/up/right/down */
   public void left( ) {horizontalMoving = true; right = false; dx = -SPEED;}
-  public void up( ) {if (y == 100) {verticalMoving = true; dy = -2000;} }
+  public void up( ) {if (y == groundlevel) {verticalMoving = true; dy = -2000;} }
   public void right( ) {horizontalMoving = true; right = true; dx = SPEED;}
   public void down( ) {verticalMoving = true; dy = ACCELERATION;}
   
@@ -100,9 +102,9 @@ class Character {
 
     /* update animation */
        	down( );
-    if (y >= 100) {
+    if (y >= groundlevel) {
     	verticalStop( );
-    	y = 100;
+    	y = groundlevel;
     }
     
     if(verticalMoving) {

@@ -17,7 +17,7 @@ public class MegamanGame {
 		    frame.addKeyListener(g);
 
 		    // display the window.
-		    frame.setSize(400, 200);
+		    frame.setSize(1320, 456);
 		    frame.setVisible(true);
 		  }    
 		}

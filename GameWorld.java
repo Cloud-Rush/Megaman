@@ -46,6 +46,7 @@ class GameWorld extends JComponent implements KeyListener {
     	}
     	else {
     		megaman.up( );
+    		 background.jumpright();
         	counter++;
     	}
    	}
@@ -67,7 +68,7 @@ class GameWorld extends JComponent implements KeyListener {
   }
   
   
-  
+  /*
   
   public void paint(Graphics g)
 	{
@@ -81,7 +82,7 @@ class GameWorld extends JComponent implements KeyListener {
 		
 	}
 
-  
+  */
 
   public void paintComponent(Graphics g) {
 	  
