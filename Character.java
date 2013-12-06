@@ -36,13 +36,13 @@ class Character {
       megaman1[2]  = ImageIO.read(new File("MMRun2RT.png"));
       megaman1[3]  = ImageIO.read(new File("MMRun3RT.png"));
       megaman1[4]  = ImageIO.read(new File("MMRun2RT.png"));
-      megaman1[5]  = ImageIO.read(new File("MMFallRT.png"));
+      megaman1[5]  = ImageIO.read(new File("MMJumpR.png"));
       megaman2[0]  = ImageIO.read(new File("MMStandLT.png"));
       megaman2[1]  = ImageIO.read(new File("MMRun1LT.png"));
       megaman2[2]  = ImageIO.read(new File("MMRun2LT.png"));
       megaman2[3]  = ImageIO.read(new File("MMRun3LT.png"));
       megaman2[4]  = ImageIO.read(new File("MMRun2LT.png"));
-      megaman2[5]  = ImageIO.read(new File("MMFallLT.png"));
+      megaman2[5]  = ImageIO.read(new File("MMJumpL.png"));
     } catch(Exception e) {
       megaman = null;
     }
@@ -126,90 +126,3 @@ class Character {
   }
 }
 
-
-class GameWorld extends JComponent implements KeyListener {
-  private Character megaman;
-  private long elapsed;
-  private int counter = 0;
-
-  public GameWorld( ) {
-    elapsed = new Date( ).getTime( );
-    megaman = new Character( );
-  }
-
-  public void keyTyped(KeyEvent e) {
-	//irrelevant
-  }
-
-  public void keyPressed(KeyEvent e) {
-    if (e.getKeyCode() == KeyEvent.VK_D ) {
-      megaman.right( );
-      counter = 0;
-    } else if (e.getKeyCode() == KeyEvent.VK_A ) {
-      megaman.left( );
-      counter = 0;
-    } else if (e.getKeyCode() == KeyEvent.VK_W ) {	  
-    	if (counter == 1) {
-    		/*does nothing*/
-    	}
-    	else {
-    		megaman.up( );
-        	counter++;
-    	}
-   	}
-  }
-
-  public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_D) {
-			if (e.getKeyCode() != KeyEvent.VK_W) {
-			megaman.horizontalStop( );
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_A ) {
-			if (e.getKeyCode() != KeyEvent.VK_W) { 
-			megaman.horizontalStop( );
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_W ) {
-    	  megaman.verticalStop( );
-    	  counter = 0; 
-    }
-  }
-
-  public void paintComponent(Graphics g) {
-    megaman.draw(g);
-
-    /* now update */
-    long time_now = new Date( ).getTime( );
-    double seconds = (time_now - elapsed) / 1000.0f;
-    elapsed = time_now;
-    megaman.update(seconds);
-
-    /* force an update */
-    revalidate( );
-    repaint( );
-    /* sleep for 1/20th of a second */
-    try {
-      Thread.sleep(50);
-    } catch(InterruptedException e) {
-      Thread.currentThread( ).interrupt( );
-    }
-  }
-}
-
-public class TestCode {
-  public static void main(String args[]) {
-    // create and set up the window.
-    JFrame frame = new JFrame("Graphics Example!");
-
-    // make the program close when the window closes
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    // add the GameWorld component
-    GameWorld g = new GameWorld( );
-    frame.add(g);
-    frame.addKeyListener(g);
-
-    // display the window.
-    frame.setSize(500, 500);
-    frame.setVisible(true);
-  }    
-}
