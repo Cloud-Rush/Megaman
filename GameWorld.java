@@ -17,8 +17,8 @@ class GameWorld extends JComponent implements KeyListener {
   
   private Image offscreen;
   private Graphics goff;
-	
-	
+        
+        
 
   public GameWorld( ) {
     elapsed = new Date( ).getTime( );
@@ -28,7 +28,7 @@ class GameWorld extends JComponent implements KeyListener {
   }
 
   public void keyTyped(KeyEvent e) {
-	//irrelevant
+        //irrelevant
   }
 
   public void keyPressed(KeyEvent e) {
@@ -37,57 +37,59 @@ class GameWorld extends JComponent implements KeyListener {
       background.right();
       counter = 0;
     } else if (e.getKeyCode() == KeyEvent.VK_A ) {
-    	megaman.left( );
-    	background.left();
+            megaman.left( );
+            background.left();
       counter = 0;
-    } else if (e.getKeyCode() == KeyEvent.VK_W ) {	  
-    	if (counter == 1) {
-    		/*does nothing*/
-    	}
-    	else {
-    		megaman.up( );
-    		 background.jumpright();
-        	counter++;
-    	}
-   	}
+    } else if (e.getKeyCode() == KeyEvent.VK_W ) {        
+            if (counter == 1) {
+                    /*does nothing*/
+            }
+            else {
+                    megaman.up( );
+                     background.jumpright();
+                counter++;
+            }
+    }
+    if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+    	megaman.shoot( );
+    }
   }
 
   public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_D) {
-			if (e.getKeyCode() != KeyEvent.VK_W) {
-			megaman.horizontalStop( );
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_A ) {
-			if (e.getKeyCode() != KeyEvent.VK_W) { 
-			megaman.horizontalStop( );
-			}
-		} else if (e.getKeyCode() == KeyEvent.VK_W ) {
-    	  megaman.verticalStop( );
-    	  counter = 0; 
+                if (e.getKeyCode() == KeyEvent.VK_D) {
+                        if (e.getKeyCode() != KeyEvent.VK_W) {
+                        megaman.horizontalStop( );
+                        }
+                } else if (e.getKeyCode() == KeyEvent.VK_A ) {
+                        if (e.getKeyCode() != KeyEvent.VK_W) {
+                        megaman.horizontalStop( );
+                        }
+                } else if (e.getKeyCode() == KeyEvent.VK_W ) {
+             megaman.verticalStop( );
+             counter = 0;
     }
   }
   
   
   /*
-  
-  public void paint(Graphics g)
-	{
-		offscreen = createImage(getWidth(),getHeight());
-		goff = offscreen.getGraphics();
-		
-		paintComponent(goff);
-		g.drawImage(offscreen, 0, 0, this);
-	
-		
-		
-	}
+public void paint(Graphics g)
+        {
+                offscreen = createImage(getWidth(),getHeight());
+                goff = offscreen.getGraphics();
+                
+                paintComponent(goff);
+                g.drawImage(offscreen, 0, 0, this);
+        
+                
+                
+        }
 
-  */
+*/
 
   public void paintComponent(Graphics g) {
-	  
-	 background.draw(g); 
-	 megaman.draw(g);
+        
+         background.draw(g);
+         megaman.draw(g);
 
     /* now update */
     long time_now = new Date( ).getTime( );
@@ -107,4 +109,3 @@ class GameWorld extends JComponent implements KeyListener {
     }
   }
 }
-
