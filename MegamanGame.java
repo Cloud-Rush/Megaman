@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 public class MegamanGame {
 	public static void main(String args[]) {
 		// create and set up the window.
-		JFrame frame = new JFrame("Graphics Example!");
+		JFrame frame = new JFrame("Megaman!");
 		
 		// make the program close when the window closes
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
