@@ -13,7 +13,18 @@ class GameWorld extends JComponent implements KeyListener {
   Background background;
   private long elapsed;
   private int counter = 0;
-   
+  //initialize and try opening the stage music.
+  //private static Sound bgMusic = new Sound("stagemusic.aiff");
+  //initialize and open blaster sounds.
+  //private static Sound blaster = new Sound("megaman_blaster.aiff");
+  //initialize and open ground contact.
+  //private static Sound groundContact = new Sound("megaman_groundcontact.aiff");
+  //initialize and open death sound.
+  //private static Sound death = new Sound("megaman_death.aiff");
+  //initialize and open enemy death.
+  //private static Sound enemyDeath = new Sound("megaman_enemydeath.aiff");
+  //initialize and open hit noise.
+  //private static Sound hit = new Sound("megaman_getHit.aiff");
   
   private Image offscreen;
   private Graphics goff;
@@ -52,6 +63,8 @@ class GameWorld extends JComponent implements KeyListener {
     }
     if (e.getKeyCode() == KeyEvent.VK_SPACE) {
     	megaman.shoot( );
+    	//play blaster SFX
+    	//blaster.play();
     }
   }
 
@@ -90,6 +103,9 @@ public void paint(Graphics g)
         
          background.draw(g);
          megaman.draw(g);
+         //plays the music, i'm not sure where this statement should go but i figure the music should play right after 
+         //the game screen gets initialized. 
+         //bgMusic.play();
 
     /* now update */
     long time_now = new Date( ).getTime( );
