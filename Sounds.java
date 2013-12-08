@@ -14,7 +14,7 @@ class Sound {
     try {
       clip = AudioSystem.getClip( );
       is = AudioSystem.getAudioInputStream(new File(name));
-      clip.open(is);
+      clip.open(groundContact);
     } catch(Exception e) {
     }
   }
