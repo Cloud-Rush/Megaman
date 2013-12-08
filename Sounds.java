@@ -10,7 +10,7 @@ class Sound {
   private AudioInputStream is;
   private long last_play = 0;
 
-  public Sound(String name) {
+  public openSound(String name) {
     try {
       clip = AudioSystem.getClip( );
       is = AudioSystem.getAudioInputStream(new File(name));
