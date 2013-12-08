@@ -18,6 +18,8 @@ class Character {
   private Image [] megaman2;
   private Rectangle MMRectangle = new Rectangle();
   private Rectangle TempRectangle = new Rectangle();
+  private Rectangle OnRectangle = new Rectangle();
+  private Rectangle LeftRectangle = new Rectangle();
   private int current;
   private boolean right = true;
   private boolean horizontalMoving = false;
@@ -94,29 +96,48 @@ class Character {
           
           index = Background.image1.size();
           
+          MMRectangle.setBounds(((int)x+18), ((int)y+5), 40, 60);
+          g.drawRect((int)x+18, (int)y+5, 40, 60);
+          
           for(int i = 0; i < index; i++) {
         	  TempRectangle = Background.image1.get(i);
         	  if (MMRectangle.intersects(TempRectangle)) {
         		if (MMRectangle.getY() < TempRectangle.getY()) {
-              		y = TempRectangle.getY() - MMRectangle.getHeight();
+              		y = TempRectangle.getY() - MMRectangle.height;
               		groundlevel = (int)y;
+              		OnRectangle = TempRectangle;
+              		Background.intersects=false;
           		}
         		else if (MMRectangle.getX() < TempRectangle.getX()) {
-        			x = TempRectangle.getX() - MMRectangle.getWidth();
+        			Background.intersects=true;
+        			//OnRectangle = TempRectangle;
+        			x = TempRectangle.getX()-MMRectangle.width-11;
+        			LeftRectangle = TempRectangle;
         		}
         		else if (MMRectangle.getX() < TempRectangle.getX() + TempRectangle.width) {
         			x = TempRectangle.getX() + TempRectangle.width;
+        			//OnRectangle = TempRectangle;
         		}
         	  }
         	  else {
-      			groundlevel = 480;
+        		if(MMRectangle.getX()< OnRectangle.getX() || MMRectangle.getX()> (OnRectangle.getX()+OnRectangle.width))  
+        			groundlevel = 480;
+        		
+        		if(MMRectangle.getX()+MMRectangle.width> LeftRectangle.getX() && MMRectangle.getX()<LeftRectangle.getX()){
+        			Background.intersects=true;
+        		}else{
+        			
+        			Background.intersects=false;
+        			
+        		}
+        		
+        			
         	  }
           }
           
     /* draw megaman on the screen */
           g.drawImage(megaman[current], (int)x, (int)y, 70, 70, null);
-          MMRectangle.setBounds((int)x, (int)y, 60, 60);
-          g.drawRect((int)x, (int)y, 60, 60);
+         
           
           if (shootCounter > 0)
         	  if (shootCounter == 2) {

@@ -45,6 +45,7 @@ public class Background extends JFrame {
 	int offscreenx10;
 	int offscreenx11;
 	static boolean scrollingDone = false;
+	static boolean intersects =false;
         
 	//background images
 	Image bg[]= new Image[12];
@@ -115,6 +116,23 @@ public class Background extends JFrame {
 		image1.add(new Rectangle(765, 300, 555, 480));
 		image1.add(new Rectangle(957, 238, 363, 480));
 		image1.add(new Rectangle(1150, 172, 170, 480));
+		
+		
+		
+		
+	
+		
+		image1.add(new Rectangle(0, 365, 1320, 480));
+		image1.add(new Rectangle(765, 300, 555, 480));
+		image1.add(new Rectangle(957, 238, 363, 480));
+		image1.add(new Rectangle(1150, 172, 170, 480));
+		image1.add(new Rectangle(0, 365, 1320, 480));
+		image1.add(new Rectangle(765, 300, 555, 480));
+		image1.add(new Rectangle(957, 238, 363, 480));
+		image1.add(new Rectangle(1150, 172, 170, 480));
+		image1.add(new Rectangle(957, 238, 363, 480));
+		image1.add(new Rectangle(1150, 172, 170, 480));
+		
                                                         
 		//System.out.println("Tilesx"+tilesx);
 		//System.out.println("Tilesy"+tilesy);            
@@ -160,11 +178,14 @@ public class Background extends JFrame {
 				image1.get(0).setBounds(0 - offsetx, 365, 1320, 480);
 				image1.get(1).setBounds(765 - offsetx, 300, 555, 480);
 				image1.get(2).setBounds(957 - offsetx, 238, 363, 480);
+				g.setColor(Color.red);
 				image1.get(3).setBounds(1150 - offsetx, 172, 170, 480);
 				g.drawRect(0 - offsetx, 365, 1320, 480);
 				g.drawRect(765 - offsetx, 300, 1320, 480);
 				g.drawRect(957 - offsetx, 238, 1320, 480);
 				g.drawRect(1150 - offsetx, 172, 1320, 480);
+				
+				
 				g.drawImage(bg[1], offscreenx, y*height-offsety,width1,screenHeight, null);
 				g.drawImage(bg[2], offscreenx2, y*height-offsety,width2,screenHeight, null);
 				g.drawImage(bg[3], offscreenx3, y*height-offsety,width3,screenHeight, null);
@@ -176,19 +197,51 @@ public class Background extends JFrame {
 				g.drawImage(bg[9], offscreenx9, y*height-offsety,width9,screenHeight, null);
 				g.drawImage(bg[10], offscreenx10, y*height-offsety,width10,screenHeight, null);
 				g.drawImage(bg[11], offscreenx11, y*height-offsety,width11,screenHeight, null);
+				g.setColor(Color.red);
+				
+				
+				
+				image1.get(4).setBounds(offscreenx8, 372, width8, 200);
+				image1.get(5).setBounds(offscreenx9-80, 308, 500, 200);
+				image1.get(6).setBounds(offscreenx10, 308, 918, 200);
+				image1.get(7).setBounds(offscreenx11, 402, 1300, 50);
+				
+				image1.get(8).setBounds(offscreenx7+572, 210, 49, 33);
+				image1.get(9).setBounds(offscreenx7+332, 308, 49, 33);
+				image1.get(10).setBounds(offscreenx7+379, 210, 49, 33);
+				image1.get(11).setBounds(offscreenx7+40, 142, 49, 33);
+				image1.get(12).setBounds(offscreenx7+138, 372, 100, 200);
+				image1.get(13).setBounds(offscreenx7+765, 372, width7, 200);
+				
+				
+				g.drawRect(offscreenx7+572, 210, 49, 33);
+				g.drawRect(offscreenx7+332, 308, 49, 33);
+				g.drawRect(offscreenx7+379, 210, 49, 33);
+				g.drawRect(offscreenx7+40, 142, 49, 33);
+				g.drawRect(offscreenx7+138, 372, 100, 200);
+				g.drawRect(offscreenx7+765, 372, width7, 200);
+				
+				g.drawRect(offscreenx8, 372, width8, 200);
+				g.drawRect(offscreenx9-80, 308, 500, 200);
+				g.drawRect(offscreenx10, 308, 918, 200);
+				g.drawRect(offscreenx11, 402, 1300, 50);
+				
+				
+				
 			}
 		}
 	}                
     
 	public void left() {
-		//if(offsetx>=0)
-		//offsetx = (offsetx-5)%width;                              
+		if(offsetx>=0)
+		offsetx = (offsetx-10);                              
 	}                    
                         
 	public void right() {
                                 
 		if(offsetx< width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9+width10-(screenWidth-width10)) {
-			offsetx = (offsetx+10);//%width;
+			if(!intersects)
+				offsetx = (offsetx+10);//%width;
 		}
 		else {
 			scrollingDone = true;
@@ -198,12 +251,12 @@ public class Background extends JFrame {
                         
 	public void jumpright() {
                                 
-		if(offsetx< width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9+width10-(screenWidth-width10)) {
-			offsetx = (offsetx+10);//%width;
-		}
-		else {
-			scrollingDone = true;
-		}
+		//if(offsetx< width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9+width10-(screenWidth-width10)) {
+			//offsetx = (offsetx+10);//%width;
+		//}
+		//else {
+		//	scrollingDone = true;
+		//}
 		//System.out.println("offsetx"+offsetx);                           
 	}
                         
