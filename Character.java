@@ -6,8 +6,8 @@ import java.awt.event.*;
 import java.util.*;
 
 class Character {
-  private static final double SPEED = 450.0;
-  private static final double ACCELERATION = 250.0;
+  private static final double SPEED = 250.0;
+  private static final double ACCELERATION = 450.0;
   private static final double WIDTH = 70.0;
   private static final double HEIGHT = 70.0;
   private double x, y, dx, dy;
@@ -33,14 +33,15 @@ class Character {
 
   /* time since last flip */
   private double timer = 0.0;
-  int groundlevel = 480;
-
+  int groundlevel = 600;
+  
+  private Shots MMshot = new Shots(0);
 
   public Character( ) {
     /* load all the images */
     try {
-      megaman1 = new Image[11];
-      megaman2 = new Image[11];
+      megaman1 = new Image[12];
+      megaman2 = new Image[12];
       megaman1[0] = ImageIO.read(new File("MMStandRT.png"));
       megaman1[1] = ImageIO.read(new File("MMRun1RT.png"));
       megaman1[2] = ImageIO.read(new File("MMRun2RT.png"));
@@ -51,7 +52,8 @@ class Character {
       megaman1[7] = ImageIO.read(new File("MMShootRun1RT.png"));
       megaman1[8] = ImageIO.read(new File("MMShootRun2RT.png"));
       megaman1[9] = ImageIO.read(new File("MMShootRun3RT.png"));
-      megaman1[10] = ImageIO.read(new File("MMFallRT.png"));
+      megaman1[10] = ImageIO.read(new File("MMShootRun2RT.png"));
+      megaman1[11] = ImageIO.read(new File("MMFallRT.png"));
       megaman2[0] = ImageIO.read(new File("MMStandLT.png"));
       megaman2[1] = ImageIO.read(new File("MMRun1LT.png"));
       megaman2[2] = ImageIO.read(new File("MMRun2LT.png"));
@@ -62,97 +64,109 @@ class Character {
       megaman2[7] = ImageIO.read(new File("MMShootRun1LT.png"));
       megaman2[8] = ImageIO.read(new File("MMShootRun2LT.png"));
       megaman2[9] = ImageIO.read(new File("MMShootRun3LT.png"));
-      megaman2[10] = ImageIO.read(new File("MMFallLT.png"));
+      megaman2[10] = ImageIO.read(new File("MMShootRun2LT.png"));
+      megaman2[11] = ImageIO.read(new File("MMFallLT.png"));
     } catch(Exception e) {
       megaman = null;
     }
 
-    x = 10;
+    x = 100;
     y = 0;
     dx = dy = 0;
     current = 0;
   }
 
   public void draw(Graphics g) {
+		
          if (right) {
                  megaman = megaman1;
          }
          else
                  megaman = megaman2;
 
-          if (shooting == true) {
-        	  if (verticalMoving == true)
-                  current = current + 5;
-        	  else
-        		  current = current + 6;
-                  System.out.println("Shooting frame happened.");
-                  System.out.print("Current = ");
-                  System.out.println(current);
-                  System.out.print("Shoot counter is ");
-                  System.out.println(shootCounter);
+          if (shooting == true && (current >= 0 && current < 6)) {
+        		current = current + 6;
+          }
+          else if (shooting == true && current == 7) {
+        	  current = 8;
+          }
+          else if (shooting == true && current == 8) {
+        	  current = 9;
+          }
+          else if (shooting == true && current == 9) {
+        	  current = 10;
+          }
+          else if (shooting == true && current == 10) {
+        	  current = 7;
           }
           
-          //&& MMRectangle.getY() + HEIGHT >= TempRectangle.getY()
+          if (shootCounter > 0) {
+        	  if (shootCounter >= 5) {
+        		  shooting = false;
+        		  shootCounter = 0;
+        	  }
+        	  else if (shootCounter > 0 && shootCounter < 5) {
+        		  shootCounter++;
+        	  }
+        	  else {
+        		  shooting = true;
+        	  }
+          }
           
-          index = Background.image1.size();
-          
+          index = Background.image.size();
           MMRectangle.setBounds(((int)x+18), ((int)y+5), 40, 60);
           g.drawRect((int)x+18, (int)y+5, 40, 60);
           
           for(int i = 0; i < index; i++) {
-        	  TempRectangle = Background.image1.get(i);
+        	  TempRectangle = Background.image.get(i);
         	  if (MMRectangle.intersects(TempRectangle)) {
         		if (MMRectangle.getY() < TempRectangle.getY()) {
               		y = TempRectangle.getY() - MMRectangle.height;
               		groundlevel = (int)y;
               		OnRectangle = TempRectangle;
+              		LeftRectangle = new Rectangle(0, 0, 0, 0);
               		Background.intersects=false;
           		}
         		else if (MMRectangle.getX() < TempRectangle.getX()) {
-        			Background.intersects=true;
-        			//OnRectangle = TempRectangle;
-        			x = TempRectangle.getX()-MMRectangle.width-11;
-        			LeftRectangle = TempRectangle;
+        			 Background.intersects=true;
+        			 x = TempRectangle.getX()-MMRectangle.width-11;
+        			 LeftRectangle = TempRectangle;
         		}
-        		else if (MMRectangle.getX() < TempRectangle.getX() + TempRectangle.width) {
+        		else if (MMRectangle.getX() + MMRectangle.width > TempRectangle.getX() + TempRectangle.width) {
         			x = TempRectangle.getX() + TempRectangle.width;
         			//OnRectangle = TempRectangle;
         		}
+        		else if (MMRectangle.getY() < (TempRectangle.getY() + TempRectangle.height)) {
+        			y = TempRectangle.getY() + TempRectangle.height;
+        		}
         	  }
         	  else {
-        		if(MMRectangle.getX()< OnRectangle.getX() || MMRectangle.getX()> (OnRectangle.getX()+OnRectangle.width))  
-        			groundlevel = 480;
-        		
-        		if(MMRectangle.getX()+MMRectangle.width> LeftRectangle.getX() && MMRectangle.getX()<LeftRectangle.getX()){
-        			Background.intersects=true;
-        		}else{
-        			
-        			Background.intersects=false;
-        			
-        		}
-        		
-        			
+        		  if(MMRectangle.getX() + MMRectangle.width < OnRectangle.getX() || MMRectangle.getX()> (OnRectangle.getX()+OnRectangle.width))  
+        			  groundlevel = 600;
+        			  if(MMRectangle.getX()+MMRectangle.width> LeftRectangle.getX() && MMRectangle.getX()<LeftRectangle.getX()) {
+        				  Background.intersects=true;
+        			  } else{
+        				  Background.intersects=false;
+        			  }
+        		  //groundlevel = 200;
         	  }
           }
           
     /* draw megaman on the screen */
           g.drawImage(megaman[current], (int)x, (int)y, 70, 70, null);
-         
-          
-          if (shootCounter > 0)
-        	  if (shootCounter == 2) {
-        		  shooting = false;
-        		  shootCounter = 0;
-        	  }
-        	  else {
-        		  shooting = false;
-        	  }
+          MMRectangle.setBounds((int)x+18, ((int)y+5), 40, 60);
+          g.setColor(Color.green);
+          g.drawRect((int)x+18, (int)y+5, 40, 60);
+          if (shooting == true) {
+        	  MMshot.draw(g);
+        	  MMshot.update();
+          }
   	}
 
   /* stop megaman */
   public void verticalStop( ) {
          dy = 0;
-         verticalMoving = false;
+         //verticalMoving = false;
   }
   
   public void horizontalStop( ) {
@@ -166,28 +180,36 @@ class Character {
   public void up( ) {verticalMoving = true; dy = -3000;}
   public void right( ) {horizontalMoving = true; right = true; dx = SPEED;}
   public void down( ) {verticalMoving = true; dy = ACCELERATION;}
-  public void shoot( ) {shooting = true; shootCounter++;}
+  public void shoot( ) {shooting = true; shootCounter++; MMshot.xStart(x + 70.0); MMshot.yStart(y + 20.0);}
   
   /* update him */
   public void update(double dt) {
+	  
+	//if (shooting == true) {
+		
+	//}
         
-    x += (dx * dt);
-    y += (dy * dt);
-
-    if(y < 50) y = 50;
-    if (Background.scrollingDone == false) {
-    	if(x < 0) x = 0;
-    	if(x > 1200) x = 1200;
+    if (Background.scrollingDone == true) {
+    	x += (dx * dt);
     }
     else {
-    	if(x < 465) x = 465;
+    	x += (dx * dt) - 7;
+    }
+    y += (dy * dt);
+
+    if (Background.scrollingDone == true) {
     	if(x > 1070) x = 1070;
+    }
+    else {
+    	if(x > 1300) x = 1300;
     }
 
     /* update animation */
-               down( );
-    if (y >= groundlevel) {
-            verticalStop( );
+    if (y < groundlevel) {
+        down( );	
+    }
+    else if (y >= groundlevel) {
+            verticalMoving = false;
             y = groundlevel;
     }
     
@@ -209,5 +231,17 @@ class Character {
     else {
             current = 0;
     }
+  }
+  
+  public boolean getVerticalMoving() {
+	  return verticalMoving;
+  }
+  
+  public boolean getHorizontalMoving() {
+	  return horizontalMoving;
+  }
+  
+  public double getX() {
+	  return x;
   }
 }
