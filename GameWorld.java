@@ -11,8 +11,9 @@ import javax.swing.JComponent;
 class GameWorld extends JComponent implements KeyListener {
   private Character megaman;
   Background background;
+  HealthBar healthbar;
+  Enemies enemies;
   private long elapsed;
-  private int counter = 0;
   //initialize and try opening the stage music.
   //private static Sound bgMusic = new Sound("stagemusic.aiff");
   //initialize and open blaster sounds.
@@ -28,14 +29,12 @@ class GameWorld extends JComponent implements KeyListener {
   
   private Image offscreen;
   private Graphics goff;
-        
-        
 
   public GameWorld( ) {
     elapsed = new Date( ).getTime( );
+    healthbar = new HealthBar( );
     megaman = new Character( );
     background = new Background();
-    
   }
 
   public void keyTyped(KeyEvent e) {
@@ -44,22 +43,11 @@ class GameWorld extends JComponent implements KeyListener {
 
   public void keyPressed(KeyEvent e) {
     if (e.getKeyCode() == KeyEvent.VK_D ) {
-      megaman.right( );
-      background.right();
-      counter = 0;
+    	megaman.right( );
     } else if (e.getKeyCode() == KeyEvent.VK_A ) {
-            megaman.left( );
-            background.left();
-      counter = 0;
+    	megaman.left( );
     } else if (e.getKeyCode() == KeyEvent.VK_W ) {        
-            if (counter == 1) {
-                    /*does nothing*/
-            }
-            else {
-                    megaman.up( );
-                     background.jumpright();
-                counter++;
-            }
+    			megaman.up( );
     }
     if (e.getKeyCode() == KeyEvent.VK_SPACE) {
     	megaman.shoot( );
@@ -70,16 +58,11 @@ class GameWorld extends JComponent implements KeyListener {
 
   public void keyReleased(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_D) {
-                        if (e.getKeyCode() != KeyEvent.VK_W) {
                         megaman.horizontalStop( );
-                        }
                 } else if (e.getKeyCode() == KeyEvent.VK_A ) {
-                        if (e.getKeyCode() != KeyEvent.VK_W) {
                         megaman.horizontalStop( );
-                        }
                 } else if (e.getKeyCode() == KeyEvent.VK_W ) {
              megaman.verticalStop( );
-             counter = 0;
     }
   }
   
@@ -103,7 +86,8 @@ public void paint(Graphics g)
         
          background.draw(g);
          megaman.draw(g);
-         //plays the music, i'm not sure where this statement should go but i figure the music should play right after 
+         healthbar.draw(g);
+       //plays the music, i'm not sure where this statement should go but i figure the music should play right after 
          //the game screen gets initialized. 
          //bgMusic.play();
 
@@ -112,6 +96,8 @@ public void paint(Graphics g)
     double seconds = (time_now - elapsed) / 1000.0f;
     elapsed = time_now;
     megaman.update(seconds);
+    background.right(seconds);
+    
 
     /* force an update */
     revalidate( );
