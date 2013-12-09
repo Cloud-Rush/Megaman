@@ -10,18 +10,8 @@ import java.util.*;
 
 public class Background extends JFrame {
 	
-	static ArrayList<Rectangle> image1 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image2 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image3 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image4 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image5 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image6 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image7 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image8 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image9 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image10 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image11 = new ArrayList<Rectangle>();
-	static ArrayList<Rectangle> image12 = new ArrayList<Rectangle>();
+	static ArrayList<Rectangle> image = new ArrayList<Rectangle>();
+	static ArrayList<Enemies> Enemy = new ArrayList<Enemies>();
 
 	int screenWidth = 1320;
 	int screenHeight = 480;
@@ -45,7 +35,10 @@ public class Background extends JFrame {
 	int offscreenx10;
 	int offscreenx11;
 	static boolean scrollingDone = false;
-	static boolean intersects =false;
+	static boolean intersects = false;
+	
+	  private static final double FLIP_TIME = 0.125;
+	  private double timer = 0.0;
         
 	//background images
 	Image bg[]= new Image[12];
@@ -112,27 +105,96 @@ public class Background extends JFrame {
 		tilesx = (int)1;//(screenWidth/width);
 		tilesy = (int)1;//(screenHeight/height);
 		
-		image1.add(new Rectangle(0, 365, 1320, 480));
-		image1.add(new Rectangle(765, 300, 555, 480));
-		image1.add(new Rectangle(957, 238, 363, 480));
-		image1.add(new Rectangle(1150, 172, 170, 480));
+		offscreenx= width0;
+		offscreenx2= width0+width1;
+		offscreenx3= width0+width1+width2;
+		offscreenx4= width0+width1+width2+width3;
+		offscreenx5=width0+width1+width2+width3+ width4;
+		offscreenx6= width0+width1+width2+width3+ width4+width5;
+		offscreenx7= width0+width1+width2+width3+ width4+width5+width6;
+		offscreenx8= width0+width1+width2+width3+ width4+width5+width6+width7;
+		offscreenx9= width0+width1+width2+width3+ width4+width5+width6+width7+width8;
+		offscreenx10= width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9;
+		offscreenx11= width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9+width10;
 		
+		//Collision Detection Rectangles for BG Image 1
+		image.add(new Rectangle(0, 365, 2495, 115));
+		image.add(new Rectangle(765, 300, 769, 180));
+		image.add(new Rectangle(957, 238, 480, 242));
+		image.add(new Rectangle(1150, 172, 170, 308));
+		Enemy.add(new Enemies(2, 1200, 100));
+		Enemy.add(new Enemies(2, 1200, 300));
+		Enemy.add(new Enemies(4, 1245, 115));
 		
+		//Collision Detection Rectangles for BG Image 2
+		image.add(new Rectangle(offscreenx + 982, 300, 190, 308));
+		image.add(new Rectangle(offscreenx + 1080, 242, 107, 320));
+		Enemy.add(new Enemies(3, offscreenx + 500, 340));
 		
+		//Collision Detection Rectangles for BG Image 3
+		image.add(new Rectangle(offscreenx2 + 125, 376, 285, 115));
+		image.add(new Rectangle(offscreenx2 + 220, 310, 185, 308));
+		image.add(new Rectangle(offscreenx2 + 317, 242, 98, 325));
+		image.add(new Rectangle(offscreenx2 + 155, 376, 285, 115));
+		image.add(new Rectangle(offscreenx2 + 270, 310, 185, 308));
+		image.add(new Rectangle(offscreenx2 + 367, 242, 98, 325));
+		image.add(new Rectangle(offscreenx2 + 225, 376, 285, 115));
+		image.add(new Rectangle(offscreenx2 + 320, 310, 185, 308));
+		image.add(new Rectangle(offscreenx2 + 417, 242, 98, 325));
+		image.add(new Rectangle(offscreenx2 + 1278, 376, 280, 115));
+		image.add(new Rectangle(offscreenx2 + 1470, 310, 180, 308));
+		image.add(new Rectangle(offscreenx2 + 1568, 242, 100, 325));
 		
-	
+		//Collision Detection Rectangles for BG Image 4
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+
+		//Collision Detection Rectangles for BG Image 5
+		image.add(new Rectangle(offscreenx4 + 62, 376, 1655, 104));
+		image.add(new Rectangle(offscreenx4 + 1532, 310, 175, 170));
+		image.add(new Rectangle(offscreenx4 + 1628, 242, 98, 238));
 		
-		image1.add(new Rectangle(0, 365, 1320, 480));
-		image1.add(new Rectangle(765, 300, 555, 480));
-		image1.add(new Rectangle(957, 238, 363, 480));
-		image1.add(new Rectangle(1150, 172, 170, 480));
-		image1.add(new Rectangle(0, 365, 1320, 480));
-		image1.add(new Rectangle(765, 300, 555, 480));
-		image1.add(new Rectangle(957, 238, 363, 480));
-		image1.add(new Rectangle(1150, 172, 170, 480));
-		image1.add(new Rectangle(957, 238, 363, 480));
-		image1.add(new Rectangle(1150, 172, 170, 480));
+		//Collision Detection Rectangles for BG Image 6
+		image.add(new Rectangle(offscreenx5 + 120, 376, 285, 115));
+		image.add(new Rectangle(offscreenx5 + 215, 310, 185, 308));
+		image.add(new Rectangle(offscreenx5 + 312, 242, 98, 325));
+		image.add(new Rectangle(offscreenx5 + 150, 376, 285, 115));
+		image.add(new Rectangle(offscreenx5 + 265, 310, 185, 308));
+		image.add(new Rectangle(offscreenx5 + 362, 242, 98, 325));
+		image.add(new Rectangle(offscreenx5 + 220, 376, 285, 115));
+		image.add(new Rectangle(offscreenx5 + 315, 310, 185, 308));
+		image.add(new Rectangle(offscreenx5 + 412, 242, 98, 325));
+		image.add(new Rectangle(offscreenx5 + 1273, 376, 780, 115));
 		
+		//Collision Detection Rectangles for BG Image 7
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		
+		image.add(new Rectangle(0, 365, 1320, 480));
+		image.add(new Rectangle(765, 300, 555, 480));
+		image.add(new Rectangle(957, 238, 363, 480));
+		image.add(new Rectangle(1150, 172, 170, 480));
+		image.add(new Rectangle(0, 365, 1320, 480));
+		image.add(new Rectangle(765, 300, 555, 480));
+		image.add(new Rectangle(957, 238, 363, 480));
+		image.add(new Rectangle(1150, 172, 170, 480));
+		image.add(new Rectangle(957, 238, 363, 480));
+		image.add(new Rectangle(1150, 172, 170, 480));
                                                         
 		//System.out.println("Tilesx"+tilesx);
 		//System.out.println("Tilesy"+tilesy);            
@@ -175,17 +237,6 @@ public class Background extends JFrame {
 				offscreenx11= width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9+width10-offsetx;;
                                         
 				g.drawImage(bg[0], onscreenx, y*height-offsety,width0,height, null);
-				image1.get(0).setBounds(0 - offsetx, 365, 1320, 480);
-				image1.get(1).setBounds(765 - offsetx, 300, 555, 480);
-				image1.get(2).setBounds(957 - offsetx, 238, 363, 480);
-				g.setColor(Color.red);
-				image1.get(3).setBounds(1150 - offsetx, 172, 170, 480);
-				g.drawRect(0 - offsetx, 365, 1320, 480);
-				g.drawRect(765 - offsetx, 300, 1320, 480);
-				g.drawRect(957 - offsetx, 238, 1320, 480);
-				g.drawRect(1150 - offsetx, 172, 1320, 480);
-				
-				
 				g.drawImage(bg[1], offscreenx, y*height-offsety,width1,screenHeight, null);
 				g.drawImage(bg[2], offscreenx2, y*height-offsety,width2,screenHeight, null);
 				g.drawImage(bg[3], offscreenx3, y*height-offsety,width3,screenHeight, null);
@@ -197,71 +248,228 @@ public class Background extends JFrame {
 				g.drawImage(bg[9], offscreenx9, y*height-offsety,width9,screenHeight, null);
 				g.drawImage(bg[10], offscreenx10, y*height-offsety,width10,screenHeight, null);
 				g.drawImage(bg[11], offscreenx11, y*height-offsety,width11,screenHeight, null);
+				
 				g.setColor(Color.red);
+				//Collision Detection Rectangles for BG Image 1
+				image.get(0).setBounds(0 - offsetx, 365, 2495, 115);
+				image.get(1).setBounds(765 - offsetx, 300, 769, 180);
+				image.get(2).setBounds(957 - offsetx, 238, 480, 242);
+				image.get(3).setBounds(1150 - offsetx, 172, 190, 308);
+				Enemy.get(0).draw(g);
+				Enemy.get(1).draw(g);
+				Enemy.get(2).draw(g);
+
+				//Collision Detection Rectangles for BG Image 2
+				image.get(4).setBounds(offscreenx + 982, 300, 190, 308);
+				image.get(5).setBounds(offscreenx + 1080, 242, 107, 320);
+				Enemy.get(3).draw(g);
 				
+				//Collision Detection Rectangles for BG Image 3
+				image.get(6).setBounds(offscreenx2 + 125, 376, 285, 115);
+				image.get(7).setBounds(offscreenx2 + 210, 315, 185, 308);
+				image.get(8).setBounds(offscreenx2 + 317, 242, 98, 325);
+				image.get(9).setBounds(offscreenx2 + 510, 376, 280, 115);
+				image.get(10).setBounds(offscreenx2 + 605, 310, 180, 308);
+				image.get(11).setBounds(offscreenx2 + 702, 242, 97, 325);
+				image.get(12).setBounds(offscreenx2 + 893, 376, 280, 115);
+				image.get(13).setBounds(offscreenx2 + 990, 310, 180, 308);
+				image.get(14).setBounds(offscreenx2 + 1088, 242, 97, 325);
+				image.get(15).setBounds(offscreenx2 + 1278, 376, 280, 115);
+				image.get(16).setBounds(offscreenx2 + 1470, 310, 180, 308);
+				image.get(17).setBounds(offscreenx2 + 1568, 242, 100, 325);
 				
+				//Collision Detection Rectangles for BG Image 4
+				image.get(18).setBounds(offscreenx3, 374, 1100, 104);
+				image.get(19).setBounds(offscreenx3 + 170, 240, 285, 33);
+				image.get(20).setBounds(offscreenx3 + 365, 207, 93, 66);
+				image.get(21).setBounds(offscreenx3 + 599, 141, 97, 33);
+				image.get(22).setBounds(offscreenx3 + 745, 306, 49, 33);
+				image.get(23).setBounds(offscreenx3 + 794, 207, 49, 33);
+				image.get(24).setBounds(offscreenx3 + 840, 108, 292, 33);
+				image.get(25).setBounds(offscreenx3 + 986, 174, 146, 33);
+				image.get(26).setBounds(offscreenx3 + 1035, 207, 97, 33);
+				image.get(27).setBounds(offscreenx3 + 1035, 339, 97, 33);
+				image.get(28).setBounds(offscreenx3 + 1082, 240, 49, 33);
+				image.get(29).setBounds(offscreenx3 + 1130, 108, 96, 350);
 				
-				image1.get(4).setBounds(offscreenx8, 372, width8, 200);
-				image1.get(5).setBounds(offscreenx9-80, 308, 500, 200);
-				image1.get(6).setBounds(offscreenx10, 308, 918, 200);
-				image1.get(7).setBounds(offscreenx11, 402, 1300, 50);
+				//Collision Detection Rectangles for BG Image 5
+				image.get(30).setBounds(offscreenx4 + 62, 376, 1655, 104);
+				image.get(31).setBounds(offscreenx4 + 1532, 310, 175, 170);
+				image.get(32).setBounds(offscreenx4 + 1628, 242, 98, 238);
 				
-				image1.get(8).setBounds(offscreenx7+572, 210, 49, 33);
-				image1.get(9).setBounds(offscreenx7+332, 308, 49, 33);
-				image1.get(10).setBounds(offscreenx7+379, 210, 49, 33);
-				image1.get(11).setBounds(offscreenx7+40, 142, 49, 33);
-				image1.get(12).setBounds(offscreenx7+138, 372, 100, 200);
-				image1.get(13).setBounds(offscreenx7+765, 372, width7, 200);
+				//Collision Detection Rectangles for BG Image 6
+				image.get(33).setBounds(offscreenx5 + 120, 376, 285, 115);
+				image.get(34).setBounds(offscreenx5 + 205, 315, 185, 308);
+				image.get(35).setBounds(offscreenx5 + 312, 242, 98, 325);
+				image.get(36).setBounds(offscreenx5 + 505, 376, 280, 115);
+				image.get(37).setBounds(offscreenx5 + 600, 310, 180, 308);
+				image.get(38).setBounds(offscreenx5 + 697, 242, 97, 325);
+				image.get(39).setBounds(offscreenx5 + 888, 376, 280, 115);
+				image.get(40).setBounds(offscreenx5 + 985, 310, 180, 308);
+				image.get(41).setBounds(offscreenx5 + 1083, 242, 97, 325);
+				image.get(42).setBounds(offscreenx5 + 1273, 376, 780, 115);
+			
+				//Collision Detection Rectangles for BG Image 7
+				image.get(43).setBounds(offscreenx6 + 620, 115, 97, 300);
+				image.get(44).setBounds(offscreenx6 + 236, 312, 49, 33);
+				image.get(45).setBounds(offscreenx6 + 284, 215, 49, 33);
+				image.get(46).setBounds(offscreenx6 + 332, 115, 386, 33);
+				image.get(47).setBounds(offscreenx6 + 92, 148, 94, 33);
+				image.get(48).setBounds(offscreenx6 - 122, 377, width6, 200);
 				
+				//Collision Detection Rectangles for BG Image 8
+				image.get(49).setBounds(offscreenx7+572, 210, 49, 33);
+				image.get(50).setBounds(offscreenx7+332, 308, 49, 33);
+				image.get(51).setBounds(offscreenx7+379, 210, 49, 33);
+				image.get(52).setBounds(offscreenx7+40, 142, 49, 33);
+				image.get(53).setBounds(offscreenx7+138, 372, 100, 200);
+				image.get(54).setBounds(offscreenx7+765, 372, width7, 200);
+		
+				//Collision Detection Rectangles for BG Image 9
+				image.get(55).setBounds(offscreenx8, 372, width8, 200);
+			
+				//Collision Detection Rectangles for BG Image 10
+				image.get(56).setBounds(offscreenx9-80, 308, 500, 200);
 				
+				//Collision Detection Rectangles for BG Image 11
+				image.get(57).setBounds(offscreenx10, 308, 918, 200);
+				
+				//Collision Detection Rectangles for BG Image 12
+				image.get(58).setBounds(offscreenx11, 402, 1300, 50);
+				
+				//Collision Detection Rectangles for BG Image 1
+				g.drawRect(0 - offsetx, 365, 2495, 115);
+				g.drawRect(765 - offsetx, 300, 769, 180);
+				g.drawRect(957 - offsetx, 238, 480, 242);
+				g.drawRect(1150 - offsetx, 172, 190, 308);
+				
+				//Collision Detection Rectangles for BG Image 2
+				g.drawRect(offscreenx + 982, 300, 190, 308);
+				g.drawRect(offscreenx + 1080, 242, 107, 320);
+				
+				//Collision Detection Rectangles for BG Image 3
+				g.drawRect(offscreenx2 + 125, 376, 280, 115);
+				g.drawRect(offscreenx2 + 220, 310, 180, 308);
+				g.drawRect(offscreenx2 + 317, 242, 98, 325);
+				g.drawRect(offscreenx2 + 510, 376, 280, 115);
+				g.drawRect(offscreenx2 + 605, 310, 180, 308);
+				g.drawRect(offscreenx2 + 702, 242, 97, 325);
+				g.drawRect(offscreenx2 + 893, 376, 280, 115);
+				g.drawRect(offscreenx2 + 990, 310, 180, 308);
+				g.drawRect(offscreenx2 + 1088, 242, 97, 325);
+				g.drawRect(offscreenx2 + 1278, 376, 280, 115);
+				g.drawRect(offscreenx2 + 1470, 310, 180, 308);
+				g.drawRect(offscreenx2 + 1568, 242, 100, 325);
+				
+				//Collision Detection Rectangles for BG Image 4
+				g.drawRect(offscreenx3, 374, 1100, 104);
+				g.drawRect(offscreenx3 + 170, 240, 285, 33);
+				g.drawRect(offscreenx3 + 365, 207, 93, 66);
+				g.drawRect(offscreenx3 + 599, 141, 97, 33);
+				g.drawRect(offscreenx3 + 745, 306, 49, 33);
+				g.drawRect(offscreenx3 + 794, 207, 49, 33);
+				g.drawRect(offscreenx3 + 1035, 207, 97, 33);
+				g.drawRect(offscreenx3 + 1082, 240, 49, 33);
+				g.drawRect(offscreenx3 + 1035, 339, 97, 33);
+				g.drawRect(offscreenx3 + 986, 174, 146, 33);
+				g.drawRect(offscreenx3 + 840, 108, 292, 33);
+				g.drawRect(offscreenx3 + 1130, 108, 96, 350);
+				
+				//Collision Detection Rectangles for BG Image 5
+				g.drawRect(offscreenx4 + 62, 376, 1655, 104);
+				g.drawRect(offscreenx4 + 1532, 310, 175, 170);
+				g.drawRect(offscreenx4 + 1628, 242, 98, 238);
+				
+				//Collision Detection Rectangles for BG Image 6
+				g.drawRect(offscreenx5 + 120, 376, 280, 115);
+				g.drawRect(offscreenx5 + 215, 310, 180, 308);
+				g.drawRect(offscreenx5 + 312, 242, 98, 325);
+				g.drawRect(offscreenx5 + 505, 376, 280, 115);
+				g.drawRect(offscreenx5 + 600, 310, 180, 308);
+				g.drawRect(offscreenx5 + 697, 242, 97, 325);
+				g.drawRect(offscreenx5 + 888, 376, 280, 115);
+				g.drawRect(offscreenx5 + 985, 310, 180, 308);
+				g.drawRect(offscreenx5 + 1083, 242, 97, 325);
+				g.drawRect(offscreenx5 + 1273, 376, 780, 115);
+				
+				//Collision Detection Rectangles for BG Image 7
+				g.drawRect(offscreenx6 + 620, 115, 97, 300);
+				g.drawRect(offscreenx6 + 236, 312, 49, 33);
+				g.drawRect(offscreenx6 + 284, 215, 49, 33);
+				g.drawRect(offscreenx6 + 332, 115, 386, 33);
+				g.drawRect(offscreenx6 + 92, 148, 94, 33);
+				g.drawRect(offscreenx6 - 122, 377, width6, 200);
+				
+				//Collision Detection Rectangles for BG Image 8
 				g.drawRect(offscreenx7+572, 210, 49, 33);
 				g.drawRect(offscreenx7+332, 308, 49, 33);
 				g.drawRect(offscreenx7+379, 210, 49, 33);
 				g.drawRect(offscreenx7+40, 142, 49, 33);
 				g.drawRect(offscreenx7+138, 372, 100, 200);
 				g.drawRect(offscreenx7+765, 372, width7, 200);
-				
+
+				//Collision Detection Rectangles for BG Image 9
 				g.drawRect(offscreenx8, 372, width8, 200);
+				
+				//Collision Detection Rectangles for BG Image 10
 				g.drawRect(offscreenx9-80, 308, 500, 200);
+				
+				//Collision Detection Rectangles for BG Image 11
 				g.drawRect(offscreenx10, 308, 918, 200);
+				
+				//Collision Detection Rectangles for BG Image 12
 				g.drawRect(offscreenx11, 402, 1300, 50);
-				
-				
-				
 			}
 		}
 	}                
     
 	public void left() {
+		//if(offsetx>=0)
+		//offsetx = (offsetx-5)%width;  
 		if(offsetx>=0)
-		offsetx = (offsetx-10);                              
+			offsetx = (offsetx-10);                              
 	}                    
                         
-	public void right() {
-                                
-		if(offsetx< width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9+width10-(screenWidth-width10)) {
-			if(!intersects)
-				offsetx = (offsetx+10);//%width;
+	public void right(double seconds) {
+		
+		timer += seconds;
+		if(timer > FLIP_TIME) {
+			timer = 0;
 		}
 		else {
-			scrollingDone = true;
+			if(offsetx< width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9+width10-(screenWidth-width10)) {
+					offsetx = (offsetx+10);//%width;
+					Enemy.get(0).scroll(15);
+					Enemy.get(1).scroll(15);
+					Enemy.get(2).scroll(10);
+					Enemy.get(3).scroll(10);
+			}
+			else {
+				scrollingDone = true;
+			}
 		}
+		
+		Enemy.get(0).update(seconds);
+		Enemy.get(1).update(seconds);
+		Enemy.get(2).update(seconds);
+		Enemy.get(3).update(seconds);
+		
 		//System.out.println("offsetx"+offsetx);                       
 	}
                         
 	public void jumpright() {
                                 
-		//if(offsetx< width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9+width10-(screenWidth-width10)) {
-			//offsetx = (offsetx+10);//%width;
-		//}
-		//else {
-		//	scrollingDone = true;
-		//}
+//		if(offsetx< width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9+width10-(screenWidth-width10)) {
+//			offsetx = (offsetx+10);//%width;
+//		}
+//		else {
+//			scrollingDone = true;
+//		}
 		//System.out.println("offsetx"+offsetx);                           
 	}
                         
                         
 	public void update(double dt) {
-                                
+		
 	}
 }
