@@ -18,7 +18,7 @@ class Character {
   private Image [] megaman2;
   private Shots [] MMshot;
   private int shotIndex = 0;
-  private Rectangle MMRectangle = new Rectangle();
+  private static Rectangle MMRectangle = new Rectangle();
   private Rectangle TempRectangle = new Rectangle();
   private Rectangle OnRectangle = new Rectangle();
   private Rectangle LeftRectangle = new Rectangle();
@@ -28,22 +28,26 @@ class Character {
   private boolean horizontalMoving = false;
   private boolean verticalMoving = false;
   private boolean shootFrame = false;
-  boolean under=false;
+  boolean under = false;
+  boolean wasHit = false;
   private int shootCounter = 0;
-  private int index = 0;
+  private int backgroundIndex = 0;
+  private int enemyIndex = 0;
 
   /* time between flips in the animation */
   private static final double FLIP_TIME = 0.125;
+  private static final double WAIT_TIME = .5;
 
   /* time since last flip */
   private double timer = 0.0;
+  private double shotTimer = 0.0;
   int groundlevel = 600;
 
   public Character( ) {
     /* load all the images */
     try {
-      megaman1 = new Image[12];
-      megaman2 = new Image[12];
+      megaman1 = new Image[15];
+      megaman2 = new Image[15];
       MMshot = new Shots[3];
       megaman1[0] = ImageIO.read(new File("MMStandRT.png"));
       megaman1[1] = ImageIO.read(new File("MMRun1RT.png"));
@@ -57,6 +61,9 @@ class Character {
       megaman1[9] = ImageIO.read(new File("MMShootRun3RT.png"));
       megaman1[10] = ImageIO.read(new File("MMShootRun2RT.png"));
       megaman1[11] = ImageIO.read(new File("MMFallRT.png"));
+      megaman1[12] = ImageIO.read(new File("MMDamaged1R.png"));
+      megaman1[13] = ImageIO.read(new File("MMDamaged2.png"));
+      megaman1[14] = ImageIO.read(new File("MMDead.png"));
       megaman2[0] = ImageIO.read(new File("MMStandLT.png"));
       megaman2[1] = ImageIO.read(new File("MMRun1LT.png"));
       megaman2[2] = ImageIO.read(new File("MMRun2LT.png"));
@@ -69,6 +76,9 @@ class Character {
       megaman2[9] = ImageIO.read(new File("MMShootRun3LT.png"));
       megaman2[10] = ImageIO.read(new File("MMShootRun2LT.png"));
       megaman2[11] = ImageIO.read(new File("MMFallLT.png"));
+      megaman2[12] = ImageIO.read(new File("MMDamaged1L.png"));
+      megaman2[13] = ImageIO.read(new File("MMDamaged2.png"));
+      megaman2[14] = ImageIO.read(new File("MMDead.png"));
       MMshot[0] = new Shots(0);
       MMshot[1] = new Shots(1);
       MMshot[2] = new Shots(2);
@@ -116,13 +126,53 @@ class Character {
         	  }
           }
           
-          index = Background.image.size();
+          backgroundIndex = Background.image.size();
+          enemyIndex = Background.Enemy.size();
           MMRectangle.setBounds(((int)x+18), ((int)y+5), 40, 60);
           //g.drawRect((int)x+18, (int)y+5, 40, 60);
           
-          under= false;
+          under = false;
+          wasHit = Shots.getMMhit();
           
-          for(int i = 0; i < index; i++) {
+          if (wasHit) {
+        	  current = 12;
+        	  if (HealthBar.index != 9) {
+        		  HealthBar.index += 1;
+        	  }
+        	  if (HealthBar.index == 9) {
+    			  current = 14;
+    			  y = groundlevel + 20;
+    			  Background.scrollingDone = true;
+    			  horizontalMoving = false;
+    			  verticalMoving = true;
+    		  }
+          }
+          
+          for (int i = 0; i < enemyIndex; i++) {
+        	  TempRectangle = Background.Enemy.get(i).getRectangle();
+        	  if (MMRectangle.intersects(TempRectangle)) {
+        		  if (MMRectangle.getX() < TempRectangle.getX()) {
+         			 x = x - 50;
+        		  }
+        		  else if (MMRectangle.getX() + MMRectangle.width > TempRectangle.getX() + TempRectangle.width) {
+         			x = x + 50;
+        		  }
+        		  if (HealthBar.index != 9) {
+        			  HealthBar.index += 1;
+        		  }
+        		  current = 12;
+        		  
+        		  if (HealthBar.index == 9) {
+        			  current = 14;
+        			  y = groundlevel + 20;
+        			  Background.scrollingDone = true;
+        			  horizontalMoving = false;
+        			  verticalMoving = true;
+        		  }
+        	  }
+          }
+          
+          for(int i = 0; i < backgroundIndex; i++) {
         	  TempRectangle = Background.image.get(i);
         	  above.setBounds(MMRectangle.x,MMRectangle.y-3000,40,2975);
         	  //g.drawRect(MMRectangle.x, MMRectangle.y-3000, 40, 2975);
@@ -168,8 +218,10 @@ class Character {
 //        MMRectangle.setBounds((int)x+18, ((int)y+5), 40, 60);
 //        g.setColor(Color.green);
 //        g.drawRect((int)x+18, (int)y+5, 40, 60);
-          if (MMshot[shotIndex] != null)
-        	  MMshot[shotIndex].ShotCreator(g, shotIndex);  
+          MMshot[0].ShotCreator(g, 0);
+          MMshot[1].ShotCreator(g, 0);
+          MMshot[2].ShotCreator(g, 0);
+          Shots.setMMhit(false);
   	}
 
   /* stop megaman */
@@ -185,12 +237,10 @@ class Character {
 
   /* left/up/right/down */
   public void left( ) {horizontalMoving = true; right = false; dx = -SPEED;}
-  //public void up( ) {if (y == groundlevel) {verticalMoving = true; dy = -3000;} }
-  //public void up( ) {verticalMoving = true; dy = -3000;}
   public void right( ) {horizontalMoving = true; right = true; dx = SPEED;}
   public void down( ) {verticalMoving = true; dy = ACCELERATION;}
   public void up( ) {
-	  if (y == groundlevel) {
+	  if (y == groundlevel && current != 14) {
 		  if(!under) {
 			  verticalMoving = true; 
 			  dy = -3000;
@@ -202,21 +252,30 @@ class Character {
   }
   public void shoot( ) {
 	  shotIndex++;
-	  if (shotIndex == 3)
-		  shotIndex = 0;
-	  shootFrame = true; shootCounter++;
-	  System.out.println(shotIndex);
-	  if (right) {
-		  MMshot[shotIndex].xStartRight(x + 70.0); 
-		  MMshot[shotIndex].yStart(y + 20.0);
-	  } else {
+	  if (shotIndex < 3) {
+		  shootFrame = true; shootCounter++;
+		  if (right) {
+			  MMshot[shotIndex].xStartRight(x + 70.0); 
+			  MMshot[shotIndex].yStart(y + 20.0);
+		  } else {
 		  MMshot[shotIndex].xStartLeft(x); 
 		  MMshot[shotIndex].yStart(y + 20.0);
-	  } 
+	  	} 
+	  }
+	  else {
+		  shotIndex = 3;
+	  }
   }
   
   /* update him */
   public void update(double dt) {
+	  
+	  shotTimer = shotTimer + dt;
+	  if (shotTimer > WAIT_TIME) {
+		  shotTimer = 0;
+		  if (shotIndex == 3)
+			  shotIndex = -1;
+	  }
         
     if (Background.scrollingDone == true) {
     	x += (dx * dt);
@@ -228,7 +287,7 @@ class Character {
 
     if (Background.scrollingDone == true) {
     	if(x > 1070) x = 1070;
-    	if(x<470) x= 470;
+    	//if(x<470) x= 470;
     }
     else {
     	if(x > 1300) x = 1300;
@@ -243,11 +302,14 @@ class Character {
             y = groundlevel;
     }
     
-    if(verticalMoving) {
+    if(verticalMoving && current != 14) {
             current = 5;
     }
     else if(horizontalMoving) {
-      timer += dt;
+    	if (current == 12)
+    		timer = timer + (dt / 5);
+    	else
+    		timer += dt;
       if(timer > FLIP_TIME) {
         timer = 0;
         if (verticalMoving == false) {
@@ -259,10 +321,14 @@ class Character {
       }
     }
     else {
-            current = 0;
+            if (current != 14)
+            	current = 0;
     }
-    if(x + 70 < 0 || y> 480)
+    if(x + 70 < 0 || y> 480) {
     	HealthBar.index=9;
+    	Background.scrollingDone = true;
+    	horizontalMoving = false;
+    }
   }
   
   public boolean getVerticalMoving() {
@@ -279,5 +345,9 @@ class Character {
   
   public static boolean getRight() {
 	  return right;
+  }
+  
+  public static Rectangle getMMRectangle( ) {
+	  return MMRectangle;
   }
 }
