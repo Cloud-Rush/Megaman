@@ -10,11 +10,11 @@ class Sound {
   private AudioInputStream is;
   private long last_play = 0;
 
-  public openSound(String name) {
+  public Sound(String name) {
     try {
       clip = AudioSystem.getClip( );
       is = AudioSystem.getAudioInputStream(new File(name));
-      clip.open(groundContact);
+      clip.open(is);
     } catch(Exception e) {
     }
   }
@@ -31,5 +31,9 @@ class Sound {
       last_play = now;
     } catch(Exception e) {
     }
+  }
+  
+  public void stop( ) {
+	  clip.stop( );
   }
 }
