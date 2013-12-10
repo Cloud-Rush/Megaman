@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.imageio.*;
+
 import java.awt.*;
 import java.io.*;
 import java.awt.event.*;
@@ -30,6 +31,7 @@ class Character {
   private boolean shootFrame = false;
   boolean under = false;
   boolean wasHit = false;
+  static boolean winner = false;
   private int shootCounter = 0;
   private int backgroundIndex = 0;
   private int enemyIndex = 0;
@@ -93,7 +95,6 @@ class Character {
   }
 
   public void draw(Graphics g) {
-		
          if (right) {
                  megaman = megaman1;
          }
@@ -152,10 +153,12 @@ class Character {
         	  TempRectangle = Background.Enemy.get(i).getRectangle();
         	  if (MMRectangle.intersects(TempRectangle)) {
         		  if (MMRectangle.getX() < TempRectangle.getX()) {
+        			 GameWorld.hit.play();
          			 x = x - 50;
         		  }
         		  else if (MMRectangle.getX() + MMRectangle.width > TempRectangle.getX() + TempRectangle.width) {
-         			x = x + 50;
+        			  GameWorld.hit.play();
+        			  x = x + 50;
         		  }
         		  if (HealthBar.index != 9) {
         			  HealthBar.index += 1;
@@ -168,6 +171,9 @@ class Character {
         			  Background.scrollingDone = true;
         			  horizontalMoving = false;
         			  verticalMoving = true;
+        		  }
+        		  if (Background.Enemy.get(i).getEnemyType() == 2) {
+        			  Background.Enemy.get(i).alive = false;
         		  }
         	  }
           }
@@ -222,7 +228,7 @@ class Character {
           MMshot[1].ShotCreator(g, 0);
           MMshot[2].ShotCreator(g, 0);
           Shots.setMMhit(false);
-  	}
+  }
 
   /* stop megaman */
   public void verticalStop( ) {
@@ -253,6 +259,7 @@ class Character {
   public void shoot( ) {
 	  shotIndex++;
 	  if (shotIndex < 3) {
+		  GameWorld.blaster.play();
 		  shootFrame = true; shootCounter++;
 		  if (right) {
 			  MMshot[shotIndex].xStartRight(x + 70.0); 
@@ -269,66 +276,69 @@ class Character {
   
   /* update him */
   public void update(double dt) {
-	  
-	  shotTimer = shotTimer + dt;
-	  if (shotTimer > WAIT_TIME) {
+	  if (current != 14) {
+		  shotTimer = shotTimer + dt;
+		  if (shotTimer > WAIT_TIME) {
 		  shotTimer = 0;
 		  if (shotIndex == 3)
 			  shotIndex = -1;
-	  }
+		  }
         
-    if (Background.scrollingDone == true) {
-    	x += (dx * dt);
-    }
-    else {
-    	x += ((dx) * dt)-3.7;
-    }
-    y += (dy * dt);
+		  if (Background.scrollingDone == true) {
+			  x += (dx * dt);
+		  }
+		  else {
+			  x += ((dx) * dt)-3.7;
+		  }
+		  y += (dy * dt);
 
-    if (Background.scrollingDone == true) {
-    	if(x > 1070) x = 1070;
-    	//if(x<470) x= 470;
-    }
-    else {
-    	if(x > 1300) x = 1300;
-    }
+		  if (Background.scrollingDone == true) {
+			  if(x > 1070) x = 1070;
+			  //if(x<470) x= 470;
+		  }
+		  else {
+			  if(x > 1300) x = 1300;
+		  }
 
-    /* update animation */
-    if (y < groundlevel) {
-        down( );	
-    }
-    else if (y >= groundlevel) {
-            verticalMoving = false;
-            y = groundlevel;
-    }
+		  /* update animation */
+		  if (y < groundlevel) {
+			  down( );	
+		  }
+		  else if (y >= groundlevel) {
+			  if (verticalMoving == true)
+			  GameWorld.groundContact.play();
+			  verticalMoving = false;
+			  y = groundlevel;
+		  }
     
-    if(verticalMoving && current != 14) {
-            current = 5;
-    }
-    else if(horizontalMoving) {
-    	if (current == 12)
-    		timer = timer + (dt / 5);
-    	else
-    		timer += dt;
-      if(timer > FLIP_TIME) {
-        timer = 0;
-        if (verticalMoving == false) {
-        current = current + 1;
-        }
-        if (current >= 5 && verticalMoving == false) {
-                current = 1;
-        }
-      }
-    }
-    else {
-            if (current != 14)
-            	current = 0;
-    }
-    if(x + 70 < 0 || y> 480) {
-    	HealthBar.index=9;
-    	Background.scrollingDone = true;
-    	horizontalMoving = false;
-    }
+		  if(verticalMoving && current != 14) {
+			  current = 5;
+		  }
+		  else if(horizontalMoving) {
+			  if (current == 12)
+				  timer = timer + (dt / 5);
+			  else
+				  timer += dt;
+			  if(timer > FLIP_TIME) {
+				  timer = 0;
+				  if (verticalMoving == false) {
+					  current = current + 1;
+				  }
+				  if (current >= 5 && verticalMoving == false) {
+					  current = 1;
+				  }
+			  }
+		  }
+		  else {
+			  if (current != 14)
+				  current = 0;
+		  }
+		  if(x + 70 < 0 || y> 480) {
+			  HealthBar.index=9;
+			  Background.scrollingDone = true;
+			  horizontalMoving = false;
+		  }
+	  }
   }
   
   public boolean getVerticalMoving() {
@@ -350,4 +360,12 @@ class Character {
   public static Rectangle getMMRectangle( ) {
 	  return MMRectangle;
   }
+  
+//  public static boolean getWinner() {
+//	  return winner;
+//  }
+//  
+//  public static void setWinner(boolean wonOrLost) {
+//	  winner = wonOrLost;
+//  }
 }
