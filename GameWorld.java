@@ -97,7 +97,6 @@ public void paint(Graphics g)
     elapsed = time_now;
     megaman.update(seconds);
     background.right(seconds);
-    
 
     /* force an update */
     revalidate( );
