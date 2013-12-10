@@ -163,6 +163,7 @@ public class Background extends JFrame {
 		image.add(new Rectangle(offscreenx4 + 62, 376, 1655, 104));
 		image.add(new Rectangle(offscreenx4 + 1532, 310, 175, 170));
 		image.add(new Rectangle(offscreenx4 + 1628, 242, 98, 238));
+		Enemy.add(new Enemies(1, offscreenx4 + 500, 340));
 		
 		//Collision Detection Rectangles for BG Image 6
 		image.add(new Rectangle(offscreenx5 + 120, 376, 285, 115));
@@ -175,6 +176,7 @@ public class Background extends JFrame {
 		image.add(new Rectangle(offscreenx5 + 315, 310, 185, 308));
 		image.add(new Rectangle(offscreenx5 + 412, 242, 98, 325));
 		image.add(new Rectangle(offscreenx5 + 1273, 376, 780, 115));
+		Enemy.add(new Enemies(3, offscreenx5 + 500, 340));
 		
 		//Collision Detection Rectangles for BG Image 7
 		image.add(new Rectangle(offscreenx3, 0, 0, 0));
@@ -184,6 +186,7 @@ public class Background extends JFrame {
 		image.add(new Rectangle(offscreenx3, 0, 0, 0));
 		image.add(new Rectangle(offscreenx3, 0, 0, 0));
 		image.add(new Rectangle(offscreenx3, 0, 0, 0));
+		Enemy.add(new Enemies(2, offscreenx3 + 500, 340));
 		
 		image.add(new Rectangle(0, 365, 1320, 480));
 		image.add(new Rectangle(765, 300, 555, 480));
@@ -296,7 +299,7 @@ public class Background extends JFrame {
 				image.get(30).setBounds(offscreenx4 + 62, 376, 1655, 104);
 				image.get(31).setBounds(offscreenx4 + 1532, 310, 175, 170);
 				image.get(32).setBounds(offscreenx4 + 1628, 242, 98, 238);
-				
+				Enemy.get(4).draw(g);
 				//Collision Detection Rectangles for BG Image 6
 				image.get(33).setBounds(offscreenx5 + 120, 376, 285, 115);
 				image.get(34).setBounds(offscreenx5 + 205, 315, 185, 308);
@@ -308,6 +311,7 @@ public class Background extends JFrame {
 				image.get(40).setBounds(offscreenx5 + 985, 310, 180, 308);
 				image.get(41).setBounds(offscreenx5 + 1083, 242, 97, 325);
 				image.get(42).setBounds(offscreenx5 + 1273, 376, 780, 115);
+				Enemy.get(5).draw(g);
 			
 				//Collision Detection Rectangles for BG Image 7
 				image.get(43).setBounds(offscreenx6 + 620, 115, 97, 300);
@@ -316,6 +320,7 @@ public class Background extends JFrame {
 				image.get(46).setBounds(offscreenx6 + 332, 115, 386, 33);
 				image.get(47).setBounds(offscreenx6 + 92, 148, 94, 33);
 				image.get(48).setBounds(offscreenx6 - 122, 377, width6, 200);
+				Enemy.get(6).draw(g);
 				
 				//Collision Detection Rectangles for BG Image 8
 				image.get(49).setBounds(offscreenx7+572, 210, 49, 33);
@@ -443,7 +448,10 @@ public class Background extends JFrame {
 					Enemy.get(1).scroll(15);
 					Enemy.get(2).scroll(10);
 					Enemy.get(3).scroll(10);
-			}
+					Enemy.get(4).scroll(10);
+					Enemy.get(5).scroll(10);
+					Enemy.get(6).scroll(10);
+					
 			else {
 				scrollingDone = true;
 			}
@@ -453,6 +461,9 @@ public class Background extends JFrame {
 		Enemy.get(1).update(seconds);
 		Enemy.get(2).update(seconds);
 		Enemy.get(3).update(seconds);
+		Enemy.get(4).update(seconds);
+		Enemy.get(5).update(seconds);
+		Enemy.get(6).update(seconds);
 		
 		//System.out.println("offsetx"+offsetx);                       
 	}
