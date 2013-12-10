@@ -14,6 +14,11 @@ class Shots {
 	private int xLocation = 0;
 	private int yLocation = 0;
 	
+	int index = 0;
+	boolean hitsomething= false;
+	Rectangle rectangle = new Rectangle();
+	Rectangle TempRectangle = new Rectangle();
+	
 	public Shots(int shotIndicator) {
 		try {
 			Bullets = new Image[3];
@@ -26,7 +31,17 @@ class Shots {
 	}
 	
 	public void draw(Graphics g) {
+		if(!hitsomething){
+			
+		if(xLocation>1320)
+			yLocation=-1000;
 		g.drawImage(Bullets[0], xLocation, yLocation, BULLET_WIDTH, BULLET_HEIGHT, null);
+		g.setColor(Color.red);
+		rectangle.setLocation(xLocation+3,yLocation+3);
+		rectangle.resize(BULLET_WIDTH-15, BULLET_HEIGHT-15);
+		g.drawRect(xLocation+3, yLocation+3, BULLET_WIDTH-15, BULLET_HEIGHT-15);
+		hitSomething();
+		}
 	}
 	
 	public void update( ) {
@@ -35,9 +50,30 @@ class Shots {
 	
 	public void xStart(double location) {
 		xLocation = (int)location;
+		hitsomething=false;
 	}
 	
 	public void yStart(double location) {
 		yLocation = (int)location;
 	}
+	
+	public void hitSomething(){
+		
+		index = Background.Enemy.size();
+		
+		for(int i = 0; i < index; i++) {
+      	  TempRectangle = Background.Enemy.get(i).getRectangle();
+      	  if(rectangle.intersects(TempRectangle)){
+      		  Background.Enemy.get(i).isHit();
+      		  hitsomething=true;
+      	  }
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
 }
