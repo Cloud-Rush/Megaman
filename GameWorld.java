@@ -1,11 +1,15 @@
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.*;
 import java.awt.event.KeyListener;
 import java.util.Date;
+import java.io.*;
 
+import javax.imageio.*;
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 
 class GameWorld extends JComponent implements KeyListener {
@@ -14,18 +18,21 @@ class GameWorld extends JComponent implements KeyListener {
   HealthBar healthbar;
   Enemies enemies;
   private long elapsed;
+  private Image megamanDead;
   //initialize and try opening the stage music.
-  //private static Sound bgMusic = new Sound("stagemusic.aiff");
+  static Sound bgMusic = new Sound("stagemusic.aiff");
   //initialize and open blaster sounds.
-  //private static Sound blaster = new Sound("megaman_blaster.aiff");
+  static Sound blaster = new Sound("megaman_blaster.aiff");
   //initialize and open ground contact.
-  //private static Sound groundContact = new Sound("megaman_groundcontact.aiff");
+  static Sound groundContact = new Sound("megaman_groundcontact.aiff");
   //initialize and open death sound.
-  //private static Sound death = new Sound("megaman_death.aiff");
+  static Sound death = new Sound("megaman_death.aiff");
   //initialize and open enemy death.
-  //private static Sound enemyDeath = new Sound("megaman_enemydeath.aiff");
+  static Sound enemyDeath = new Sound("megaman_enemydeath.aiff");
   //initialize and open hit noise.
-  //private static Sound hit = new Sound("megaman_getHit.aiff");
+  static Sound hit = new Sound("megaman_getHit.aiff");
+  //initialize and open boss music
+  static Sound bossMusic = new Sound("bossfight.aiff");
   
   private Image offscreen;
   private Graphics goff;
@@ -35,6 +42,12 @@ class GameWorld extends JComponent implements KeyListener {
     healthbar = new HealthBar( );
     megaman = new Character( );
     background = new Background();
+    
+    try {
+    	megamanDead = ImageIO.read(new File("MMDead.png"));
+    } catch (Exception e) {
+    	megamanDead = null;
+    }
   }
 
   public void keyTyped(KeyEvent e) {
@@ -65,48 +78,55 @@ class GameWorld extends JComponent implements KeyListener {
              megaman.verticalStop( );
     }
   }
-  
-  
-  /*
-public void paint(Graphics g)
-        {
-                offscreen = createImage(getWidth(),getHeight());
-                goff = offscreen.getGraphics();
-                
-                paintComponent(goff);
-                g.drawImage(offscreen, 0, 0, this);
-        
-                
-                
-        }
-
-*/
 
   public void paintComponent(Graphics g) {
-        
-         background.draw(g);
-         megaman.draw(g);
-         healthbar.draw(g);
-       //plays the music, i'm not sure where this statement should go but i figure the music should play right after 
-         //the game screen gets initialized. 
-         //bgMusic.play();
+	  if (healthbar.index != 9) {
+		  background.draw(g);
+		  megaman.draw(g);
+		  healthbar.draw(g);
 
-    /* now update */
-    long time_now = new Date( ).getTime( );
-    double seconds = (time_now - elapsed) / 1000.0f;
-    elapsed = time_now;
-    megaman.update(seconds);
-    background.right(seconds);
+		  /* now update */
+		  long time_now = new Date( ).getTime( );
+		  double seconds = (time_now - elapsed) / 1000.0f;
+		  elapsed = time_now;
+		  megaman.update(seconds);
+		  background.right(seconds);
 
-    /* force an update */
-    revalidate( );
-    repaint( );
+		  /* force an update */
+		  revalidate( );
+		  repaint( );
     
-    /* sleep for 1/20th of a second */
-    try {
-      Thread.sleep(50);
-    } catch(InterruptedException e) {
-      Thread.currentThread( ).interrupt( );
-    }
+		  /* sleep for 1/20th of a second */
+		  try {
+			  Thread.sleep(50);
+		  } catch(InterruptedException e) {
+			  Thread.currentThread( ).interrupt( );
+		  }
+	  }
+	  else {
+		  death.play();
+		  try {
+		  bgMusic.stop( );
+		  } catch (Exception e) {
+			  //unused
+		  }
+		  Font f = new Font("Arial", Font.BOLD, 150);
+		  g.setFont(f);
+		  g.drawString("Game Over", 200, 200);
+		  g.drawImage(megamanDead, 450, 250, 300, 300, null);
+		  Font q = new Font("Arial", Font.BOLD, 25);
+		  g.setFont(q);
+		  g.drawString("Your final score was:", 500, 50);
+		  g.drawString(String.valueOf(Background.score), 753, 52);
+		  if (Background.score > Integer.parseInt(MegamanGame.highscore))
+		  try {
+				PrintWriter out = new PrintWriter("highscore.txt");
+				String t = String.valueOf(Background.score);
+				out.println(t);
+				out.close();
+				} catch (Exception e) {
+					//unused
+				}
+	  }
   }
 }
