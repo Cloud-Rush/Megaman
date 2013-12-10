@@ -197,7 +197,7 @@ public class Background extends JFrame {
 		image.add(new Rectangle(957, 238, 363, 480));
 		image.add(new Rectangle(1150, 172, 170, 480));
 		image.add(new Rectangle(957, 238, 363, 480));
-		image.add(new Rectangle(1150, 172, 170, 480));
+	//	image.add(new Rectangle(1150, 172, 170, 480));
                                                         
 		//System.out.println("Tilesx"+tilesx);
 		//System.out.println("Tilesy"+tilesy);            
