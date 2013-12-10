@@ -162,6 +162,8 @@ public class Background extends JFrame {
 		//screen 9
 		 Enemy.add(new Enemies(4, w7, 315));
 		 
+		 Enemy.add(new Enemies(1, w10 + 600, 398));
+		 
 		 
 		
 	            
@@ -230,24 +232,26 @@ public class Background extends JFrame {
 	}                    
                         
 	public void right(double seconds) {
-		
+	
+		if (scrollingDone == false) {
 		timer += seconds;
 		if(timer > FLIP_TIME) {
 			timer = 0;
 		}
 		else {
 			if(offsetx< width0+width1+width2+width3+ width4+width5+width6+width7+width8+width9+width10-(screenWidth-width10)) {
-					offsetx = (offsetx+10);
+					offsetx = (offsetx+5);
 					Enemy.get(0).scroll(15);
 					Enemy.get(1).scroll(15);
-					Enemy.get(2).scroll(10);
-					Enemy.get(3).scroll(10);
-					Enemy.get(4).scroll(10);
-                    Enemy.get(5).scroll(10);
+					Enemy.get(2).scroll(5);
+					Enemy.get(3).scroll(5);
+					Enemy.get(4).scroll(5);
+                    Enemy.get(5).scroll(5);
                     Enemy.get(6).scroll(15);
-                    Enemy.get(7).scroll(10);
-                    Enemy.get(8).scroll(10);
-                    Enemy.get(9).scroll(10);
+                    Enemy.get(7).scroll(5);
+                    Enemy.get(8).scroll(5);
+                    Enemy.get(9).scroll(5);
+                    Enemy.get(10).scroll(5);
 				
 			}
 			else {
@@ -259,7 +263,7 @@ public class Background extends JFrame {
 		for(int i=0; i< Enemy.size();i++)
 			Enemy.get(i).update(seconds);
 	
-		                      
+		}                     
 	}
                         
 
@@ -534,6 +538,7 @@ public class Background extends JFrame {
 	
 		//Collision Detection Rectangles for BG Image 12
 		image.get(58).setBounds(offscreenx11, 402, 1300, 50);
+		Enemy.get(10).draw(g);
 		
 		/*
 		//Collision Detection Rectangles for BG Image 12
