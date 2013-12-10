@@ -10,23 +10,24 @@ class Character {
   private static final double ACCELERATION = 450.0;
   private static final double WIDTH = 70.0;
   private static final double HEIGHT = 70.0;
-  private double x, y, dx, dy,dy2;
- 
+  private double x, y, dx, dy, dy2;
 
   /* now we have an array of images */
   private Image [] megaman;
   private Image [] megaman1;
   private Image [] megaman2;
+  private Shots [] MMshot;
+  private int shotIndex = 0;
   private Rectangle MMRectangle = new Rectangle();
   private Rectangle TempRectangle = new Rectangle();
   private Rectangle OnRectangle = new Rectangle();
   private Rectangle LeftRectangle = new Rectangle();
   private Rectangle above = new Rectangle();
   private int current;
-  private boolean right = true;
+  private static boolean right = true;
   private boolean horizontalMoving = false;
   private boolean verticalMoving = false;
-  private boolean shooting = false;
+  private boolean shootFrame = false;
   boolean under=false;
   private int shootCounter = 0;
   private int index = 0;
@@ -37,14 +38,13 @@ class Character {
   /* time since last flip */
   private double timer = 0.0;
   int groundlevel = 600;
-  
-  private Shots MMshot = new Shots(0);
 
   public Character( ) {
     /* load all the images */
     try {
       megaman1 = new Image[12];
       megaman2 = new Image[12];
+      MMshot = new Shots[3];
       megaman1[0] = ImageIO.read(new File("MMStandRT.png"));
       megaman1[1] = ImageIO.read(new File("MMRun1RT.png"));
       megaman1[2] = ImageIO.read(new File("MMRun2RT.png"));
@@ -69,6 +69,9 @@ class Character {
       megaman2[9] = ImageIO.read(new File("MMShootRun3LT.png"));
       megaman2[10] = ImageIO.read(new File("MMShootRun2LT.png"));
       megaman2[11] = ImageIO.read(new File("MMFallLT.png"));
+      MMshot[0] = new Shots(0);
+      MMshot[1] = new Shots(1);
+      MMshot[2] = new Shots(2);
     } catch(Exception e) {
       megaman = null;
     }
@@ -87,65 +90,54 @@ class Character {
          else
                  megaman = megaman2;
 
-          if (shooting == true && (current >= 0 && current < 6)) {
+          if (shootFrame == true && (current >= 0 && current < 6)) {
         		current = current + 6;
           }
-          else if (shooting == true && current == 7) {
+          else if (shootFrame == true && current == 7) {
         	  current = 8;
           }
-          else if (shooting == true && current == 8) {
+          else if (shootFrame == true && current == 8) {
         	  current = 9;
           }
-          else if (shooting == true && current == 9) {
+          else if (shootFrame == true && current == 9) {
         	  current = 10;
           }
-          else if (shooting == true && current == 10) {
+          else if (shootFrame == true && current == 10) {
         	  current = 7;
           }
           
           if (shootCounter > 0) {
         	  if (shootCounter >= 5) {
-        		  shooting = false;
+        		  shootFrame = false;
         		  shootCounter = 0;
         	  }
         	  else if (shootCounter > 0 && shootCounter < 5) {
         		  shootCounter++;
         	  }
-        	  else {
-        		  shooting = true;
-        	  }
           }
           
           index = Background.image.size();
           MMRectangle.setBounds(((int)x+18), ((int)y+5), 40, 60);
-          g.drawRect((int)x+18, (int)y+5, 40, 60);
+          //g.drawRect((int)x+18, (int)y+5, 40, 60);
           
           under= false;
           
           for(int i = 0; i < index; i++) {
         	  TempRectangle = Background.image.get(i);
         	  above.setBounds(MMRectangle.x,MMRectangle.y-3000,40,2975);
-        	  g.drawRect(MMRectangle.x, MMRectangle.y-3000, 40, 2975);
+        	  //g.drawRect(MMRectangle.x, MMRectangle.y-3000, 40, 2975);
         	  if(above.intersects(TempRectangle)){
-        		  
         		  under=true;
         		  dy2= ((TempRectangle.getY() + TempRectangle.height)-MMRectangle.y)+2;
-        		  System.out.println(dy2);
         	  }
-        		  
-        	  
         	  if (MMRectangle.intersects(TempRectangle)) {
-        		  
-        		  
-        		  	
-        			  
-        			if ((MMRectangle.getY()-MMRectangle.height) < TempRectangle.getY()) {
-                  		y = TempRectangle.getY() - MMRectangle.height;
-                  		groundlevel = (int)y;
-                  		OnRectangle = TempRectangle;
-                  		LeftRectangle = new Rectangle(0, 0, 0, 0);
-                  		Background.intersects=false;
-              		}
+        		if ((MMRectangle.getY()) < TempRectangle.getY()) {
+              		y = TempRectangle.getY() - MMRectangle.height;
+              		groundlevel = (int)y;
+              		OnRectangle = TempRectangle;
+              		LeftRectangle = new Rectangle(0, 0, 0, 0);
+              		Background.intersects=false;
+          		}
         		else if (MMRectangle.getX() < TempRectangle.getX()) {
         			 Background.intersects=true;
         			 x = TempRectangle.getX()-MMRectangle.width-11;
@@ -156,9 +148,8 @@ class Character {
         			//OnRectangle = TempRectangle;
         		}
         		else if (MMRectangle.getY()+MMRectangle.height > (TempRectangle.getY() + TempRectangle.height)) {
-          			y = TempRectangle.getY() + TempRectangle.height;
-        		  } 
-        		
+        			y = TempRectangle.getY() + TempRectangle.height;
+        		}
         	  }
         	  else {
         		  if(MMRectangle.getX() + MMRectangle.width < OnRectangle.getX() || MMRectangle.getX()> (OnRectangle.getX()+OnRectangle.width))  
@@ -174,17 +165,11 @@ class Character {
           
     /* draw megaman on the screen */
           g.drawImage(megaman[current], (int)x, (int)y, 70, 70, null);
-         // MMRectangle.setBounds((int)x+18, ((int)y+5), 40, 60);
-          //g.setColor(Color.green);
-          g.drawRect((int)x+18, (int)y+5, 40, 60);
-          if (shooting == true) {
-        	 
-        	  
-          }
-          
-          MMshot.draw(g);
-    	  MMshot.update();
-          
+//        MMRectangle.setBounds((int)x+18, ((int)y+5), 40, 60);
+//        g.setColor(Color.green);
+//        g.drawRect((int)x+18, (int)y+5, 40, 60);
+          if (MMshot[shotIndex] != null)
+        	  MMshot[shotIndex].ShotCreator(g, shotIndex);  
   	}
 
   /* stop megaman */
@@ -201,23 +186,43 @@ class Character {
   /* left/up/right/down */
   public void left( ) {horizontalMoving = true; right = false; dx = -SPEED;}
   //public void up( ) {if (y == groundlevel) {verticalMoving = true; dy = -3000;} }
-  public void up( ) {if(!under){verticalMoving = true; dy = -3000;}else{ verticalMoving = true;y = y+dy2;} }
+  //public void up( ) {verticalMoving = true; dy = -3000;}
   public void right( ) {horizontalMoving = true; right = true; dx = SPEED;}
   public void down( ) {verticalMoving = true; dy = ACCELERATION;}
-  public void shoot( ) {shooting = true; shootCounter++; MMshot.xStart(x + 70.0); MMshot.yStart(y + 20.0);}
+  public void up( ) {
+	  if (y == groundlevel) {
+		  if(!under) {
+			  verticalMoving = true; 
+			  dy = -3000;
+		  } else {
+			  verticalMoving = true;
+			  y = y+dy2;
+		  }
+	  }
+  }
+  public void shoot( ) {
+	  shotIndex++;
+	  if (shotIndex == 3)
+		  shotIndex = 0;
+	  shootFrame = true; shootCounter++;
+	  System.out.println(shotIndex);
+	  if (right) {
+		  MMshot[shotIndex].xStartRight(x + 70.0); 
+		  MMshot[shotIndex].yStart(y + 20.0);
+	  } else {
+		  MMshot[shotIndex].xStartLeft(x); 
+		  MMshot[shotIndex].yStart(y + 20.0);
+	  } 
+  }
   
   /* update him */
   public void update(double dt) {
-	  
-	//if (shooting == true) {
-		
-	//}
         
     if (Background.scrollingDone == true) {
     	x += (dx * dt);
     }
     else {
-    	x += ((dx) * dt)-6.7;
+    	x += ((dx) * dt)-3.7;
     }
     y += (dy * dt);
 
@@ -252,17 +257,12 @@ class Character {
                 current = 1;
         }
       }
- 
-      
     }
     else {
             current = 0;
     }
-    
     if(x + 70 < 0 || y> 480)
     	HealthBar.index=9;
-    
-    
   }
   
   public boolean getVerticalMoving() {
@@ -275,5 +275,9 @@ class Character {
   
   public double getX() {
 	  return x;
+  }
+  
+  public static boolean getRight() {
+	  return right;
   }
 }
