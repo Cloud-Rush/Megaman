@@ -80,12 +80,12 @@ class Enemies {
                         g.setColor(Color.red);
                         rectangle.setLocation(enemyX,enemyY-10);
                         rectangle.resize(xWidth-20, yHeight-20);
-                        g.drawRect(enemyX+5, enemyY, xWidth-30, yHeight-30);
+//                      g.drawRect(enemyX+5, enemyY, xWidth-30, yHeight-30);
                         Enemy1Shot.xStartLeft(enemyX - 5);
                         Enemy1Shot.yStart(enemyY);
                         }
                         else{
-                                g.drawImage(Enemy1[enemy1Current], enemyX, enemyY, xWidth, yHeight, null);
+                        		g.drawImage(Enemy1[enemy1Current], enemyX, enemyY, xWidth, yHeight, null);
                                 rectangle.setLocation(-100,-100);
                                 rectangle.resize(0, 0);        
                                 
@@ -97,7 +97,7 @@ class Enemies {
                         g.setColor(Color.red);
                         rectangle.setLocation(enemyX+5,enemyY+7);
                         rectangle.resize(xWidth-34, yHeight-32);
-                        g.drawRect(enemyX+5, enemyY+7, xWidth-34, yHeight-32);
+//                      g.drawRect(enemyX+5, enemyY+7, xWidth-34, yHeight-32);
                         
                 }
                 if (enemyType == 3) {
@@ -106,7 +106,7 @@ class Enemies {
                                 g.setColor(Color.yellow);
                                 rectangle.setLocation(-100,-100);
                                 rectangle.resize(0, 0);
-                                //g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
+//                              g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
                         
                         }
                         else if (enemy3Current == 3) {
@@ -114,7 +114,7 @@ class Enemies {
                             g.setColor(Color.green);
                             rectangle.setLocation(enemyX,enemyY-10);
                             rectangle.resize(xWidth-25, yHeight-20);
-                            g.drawRect(enemyX, enemyY-10, xWidth-25, yHeight-20);
+//                          g.drawRect(enemyX, enemyY-10, xWidth-25, yHeight-20);
                             Enemy3Shot.xStartLeft(enemyX - 20);
                             Enemy3Shot.yStart(enemyY - 20);
                         }
@@ -123,7 +123,7 @@ class Enemies {
                                 g.setColor(Color.green);
                                 rectangle.setLocation(enemyX,enemyY-10);
                                 rectangle.resize(xWidth-25, yHeight-20);
-                                g.drawRect(enemyX, enemyY-10, xWidth-25, yHeight-20);
+//                              g.drawRect(enemyX, enemyY-10, xWidth-25, yHeight-20);
                         }
                 }
                 if (enemyType == 4) {
@@ -132,14 +132,14 @@ class Enemies {
                         	g.setColor(Color.red);
                         	rectangle.setLocation(enemyX+5,enemyY-120);
                         	rectangle.resize(xWidth-10, yHeight-10);
-                        	g.drawRect(enemyX+5, enemyY-50, xWidth-8, yHeight);
+//                        	g.drawRect(enemyX+5, enemyY-50, xWidth-8, yHeight);
                         }
                         else if (enemy4Current == 4) {
                         	g.drawImage(Enemy4[enemy4Current], enemyX, enemyY, xWidth, yHeight, null);
                             g.setColor(Color.red);
                             rectangle.setLocation(enemyX+5,enemyY+2);
                             rectangle.resize(xWidth-10, yHeight-10);
-                            g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
+//                          g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
                             Enemy4Shot.xStartLeft(enemyX - 20);
                             Enemy4Shot.yStart(enemyY + 20);
                         }
@@ -149,7 +149,7 @@ class Enemies {
                         	g.setColor(Color.red);
                         	rectangle.setLocation(enemyX+5,enemyY+2);
                         	rectangle.resize(xWidth-10, yHeight-10);
-                        	g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
+//                        	g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
                                 //}
 //                        		else{
 //                                        g.drawImage(Enemy4[enemy4Current], enemyX, enemyY, xWidth, yHeight, null);
@@ -174,12 +174,25 @@ class Enemies {
         	
         	if (enemyType == 3 && hits >= 3) {
         		alive = false;
+        		GameWorld.enemyDeath.play();
+        		Background.score += 300;
         	}
         	else if (enemyType == 4 && hits >= 5) {
         		alive = false;
+        		GameWorld.enemyDeath.play();
+        		Background.score += 600;
         	}
-        	else if (enemyType == 1 || enemyType == 2)
+        	else if (enemyType == 2) {
+        		alive = false;
+        		GameWorld.enemyDeath.play();
+        		Background.score += 150;
+        	}
+        	else if (enemyType == 1) {
                  alive = false;
+                 GameWorld.enemyDeath.play();
+                 Background.score += 100000;
+        	}
+        	
             // }
         }
         
@@ -227,5 +240,13 @@ class Enemies {
         
         public void scroll(int scrollValue) {
                 enemyX -= scrollValue;
+        }
+        
+        public boolean isAlive() {
+        	return alive;
+        }
+        
+        public int getEnemyType() {
+        	return enemyType;
         }
 }
