@@ -101,6 +101,7 @@ class Shots {
 			 else if ((shotIndicator == 1 || shotIndicator == 2) && rectangle.intersects(MMRectangle)) {
 				 hitsomething = true;
 				 MMhit = true;
+				 GameWorld.hit.play();
 			 }
 		 }
 	 }
