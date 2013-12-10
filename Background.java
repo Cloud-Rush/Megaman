@@ -111,10 +111,7 @@ public class Background extends JFrame {
 		height10= bg[10].getHeight(this)*2;
 		width11= bg[11].getWidth(this)*3;
                 
-		
 		screenHeight = bg[0].getHeight(this)*2;
-		
-                                
 	
 		
 		w0= width0;
@@ -155,6 +152,17 @@ public class Background extends JFrame {
 		 
 		//screen 7
 		 Enemy.add(new Enemies(2, w2 + 500, 100));
+		 
+		 
+		 
+		 //screen8
+		 Enemy.add(new Enemies(1, w6 + 900, 350));
+		 Enemy.add(new Enemies(1, w6 + 1500, 350));
+		 
+		//screen 9
+		 Enemy.add(new Enemies(4, w7, 315));
+		 
+		 
 		
 	            
 	}
@@ -170,7 +178,7 @@ public class Background extends JFrame {
 				onscreenx= x*w0-offsetx;
 				offscreenx= w0-offsetx;
                         
-			
+				
 				offscreenx2= w1-offsetx;
 				offscreenx3= w2-offsetx;
 				offscreenx4= w3-offsetx;;
@@ -237,6 +245,9 @@ public class Background extends JFrame {
 					Enemy.get(4).scroll(10);
                     Enemy.get(5).scroll(10);
                     Enemy.get(6).scroll(15);
+                    Enemy.get(7).scroll(10);
+                    Enemy.get(8).scroll(10);
+                    Enemy.get(9).scroll(10);
 				
 			}
 			else {
@@ -461,6 +472,8 @@ public class Background extends JFrame {
 		image.get(52).setBounds(offscreenx7+40, 142, 49, 33);
 		image.get(53).setBounds(offscreenx7+138, 372, 100, 200);
 		image.get(54).setBounds(offscreenx7+765, 372, width7, 200);
+		Enemy.get(7).draw(g);
+		Enemy.get(8).draw(g);
 		
 		/*
 		//Collision Detection Rectangles for BG Image 8
@@ -479,6 +492,7 @@ public class Background extends JFrame {
 	
 		//Collision Detection Rectangles for BG Image 9
 		image.get(55).setBounds(offscreenx8, 372, width8, 200);
+		Enemy.get(9).draw(g);
 		
 		/*
 		//Collision Detection Rectangles for BG Image 9
