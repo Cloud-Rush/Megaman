@@ -111,13 +111,11 @@ public class Background extends JFrame {
 		height10= bg[10].getHeight(this)*2;
 		width11= bg[11].getWidth(this)*3;
                 
-		//screenWidth = bg[0].getWidth(this)*3;
+		
 		screenHeight = bg[0].getHeight(this)*2;
-		//System.out.println(screenHeight);
-		//System.out.println(screenWidth);
+		
                                 
-		tilesx = (int)1;//(screenWidth/width);
-		tilesy = (int)1;//(screenHeight/height);
+	
 		
 		w0= width0;
 		w1= width0+width1;
@@ -167,16 +165,12 @@ public class Background extends JFrame {
         
 	public void draw(Graphics g) {                
 		//scrolls background
-		for(int y =0; y<tilesy; y++) {
-			for(int x=0; x<tilesx;x++) {                            
+		for(int y =0; y<1; y++) {
+			for(int x=0; x<1;x++) {                            
 				onscreenx= x*w0-offsetx;
 				offscreenx= w0-offsetx;
                         
-				// System.out.println("onscreen "+onscreenx);
-				//System.out.println("offscreen"+ offscreenx);
-                                        
-				//if(offsetx>994 && i<=9)
-				//                i=i++;
+			
 				offscreenx2= w1-offsetx;
 				offscreenx3= w2-offsetx;
 				offscreenx4= w3-offsetx;;
