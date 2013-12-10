@@ -1,11 +1,12 @@
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
+import java.io.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
 
+import java.awt.*;
 import java.util.*;
 
 public class Background extends JFrame {
@@ -76,6 +77,8 @@ public class Background extends JFrame {
 	int w10=screenWidth;
 	int w11=screenWidth;
 	
+	static int score = 0;
+	String scoreString;
         
 	public Background() {
 		try {
@@ -145,7 +148,7 @@ public class Background extends JFrame {
 		
 	
 		//screen 5
-		 Enemy.add(new Enemies(1, w3 + 500, 342));
+		 Enemy.add(new Enemies(3, w3 + 500, 342));
 		 
 		//screen 6
 		 Enemy.add(new Enemies(3, w4 + 500, 350));
@@ -156,13 +159,13 @@ public class Background extends JFrame {
 		 
 		 
 		 //screen8
-		 Enemy.add(new Enemies(1, w6 + 900, 350));
-		 Enemy.add(new Enemies(1, w6 + 1500, 350));
+		 Enemy.add(new Enemies(3, w6 + 900, 350));
+		 Enemy.add(new Enemies(3, w6 + 1500, 350));
 		 
 		//screen 9
 		 Enemy.add(new Enemies(4, w7, 315));
 		 
-		 Enemy.add(new Enemies(1, w10 + 600, 398));
+		 Enemy.add(new Enemies(1, w10 + 600, 370));
 		 
 		 
 		
@@ -175,6 +178,11 @@ public class Background extends JFrame {
         
 	public void draw(Graphics g) {                
 		//scrolls background
+		
+//		JLabel scoreLabel = new JLabel(scoreString);
+//		scoreLabel.setVerticalTextPosition(200);
+//		scoreLabel.setHorizontalTextPosition(200);
+		
 		for(int y =0; y<1; y++) {
 			for(int x=0; x<1;x++) {                            
 				onscreenx= x*w0-offsetx;
@@ -223,6 +231,12 @@ public class Background extends JFrame {
 				
 			}
 		}
+		
+		scoreString = String.valueOf(score);
+		Font f = new Font("Arial", Font.BOLD, 30);
+		g.setFont(f);
+		g.setColor(Color.WHITE);
+		g.drawString(scoreString, 620, 50);
 	}                
     
 	public void left() {
@@ -256,14 +270,13 @@ public class Background extends JFrame {
 			}
 			else {
 				scrollingDone = true;
+				GameWorld.bgMusic.stop();
+				GameWorld.bossMusic.play();
 			}
 		}
-		
-		
+		}
 		for(int i=0; i< Enemy.size();i++)
 			Enemy.get(i).update(seconds);
-	
-		}                     
 	}
                         
 
@@ -538,7 +551,22 @@ public class Background extends JFrame {
 	
 		//Collision Detection Rectangles for BG Image 12
 		image.get(58).setBounds(offscreenx11, 402, 1300, 50);
-		Enemy.get(10).draw(g);
+		if (scrollingDone == true)
+			Enemy.get(10).draw(g);
+		if (!Enemy.get(10).isAlive()) {
+			Font f = new Font("Arial", Font.BOLD, 150);
+			g.setFont(f);
+			g.drawString("Congratulations!", 70, 200);
+			g.drawString("You Win!", 300, 400);
+			try {
+			PrintWriter out = new PrintWriter("highscore.txt");
+			String t = String.valueOf(score);
+			out.println(t);
+			out.close();
+			} catch (Exception e) {
+				//unused
+			}
+		}
 		
 		/*
 		//Collision Detection Rectangles for BG Image 12
