@@ -29,6 +29,7 @@ class Enemies {
 	private double timer1 = 0.0;
 	private double timer3 = 0.0;
 	private double timer4 = 0.0;
+	Rectangle rectangle = new Rectangle(enemyX,enemyY,xWidth,yHeight);
 	
 	public Enemies(int type, int x, int y) {
 		
@@ -63,25 +64,54 @@ class Enemies {
 	public void draw(Graphics g) {
 		if (enemyType == 1) {
 			g.drawImage(Enemy1[enemy1Current], enemyX, enemyY, xWidth, yHeight, null);
+			g.setColor(Color.red);
+			rectangle.setLocation(enemyX,enemyY-10);
+			rectangle.resize(xWidth-20, yHeight-20);
+			g.drawRect(enemyX+5, enemyY, xWidth-30, yHeight-30);
 		}
 		if (enemyType == 2) {
 			g.drawImage(Enemy2, enemyX, enemyY, xWidth, yHeight, null);
+			g.setColor(Color.red);
+			rectangle.setLocation(enemyX+5,enemyY+7);
+			rectangle.resize(xWidth-34, yHeight-32);
+			g.drawRect(enemyX+5, enemyY+7, xWidth-34, yHeight-32);
+			
 		}
 		if (enemyType == 3) {
 			if (enemy3Current == 0) {
 				g.drawImage(Enemy3[enemy3Current], enemyX, enemyY, xWidth, yHeight, null);
+				g.setColor(Color.yellow);
+				rectangle.setLocation(enemyX+5,enemyY+2);
+				rectangle.resize(xWidth-10, yHeight-10);
+				g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
+			
 			}
 			else
 				g.drawImage(Enemy3[enemy3Current], enemyX, enemyY - 16, xWidth, yHeight, null);
+				g.setColor(Color.green);
+				rectangle.setLocation(enemyX,enemyY-10);
+				rectangle.resize(xWidth-25, yHeight-20);
+				g.drawRect(enemyX, enemyY-10, xWidth-25, yHeight-20);
 		}
 		if (enemyType == 4) {
 			if (enemy4Current == 1) {
 				g.drawImage(Enemy4[enemy4Current], enemyX, enemyY - 50, xWidth, yHeight, null);
+				g.setColor(Color.red);
+				rectangle.setLocation(enemyX+5,enemyY-50);
+				rectangle.resize(xWidth-8, yHeight);
+				g.drawRect(enemyX+5, enemyY-50, xWidth-8, yHeight);
 			}
 			else {
 				g.drawImage(Enemy4[enemy4Current], enemyX, enemyY, xWidth, yHeight, null);
+				g.setColor(Color.red);
+				rectangle.setLocation(enemyX+5,enemyY+2);
+				rectangle.resize(xWidth-10, yHeight-10);
+				g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
 			}
 		}
+		
+		
+		
 	}
 		
 	public void update(double seconds) {
