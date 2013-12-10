@@ -231,6 +231,10 @@ class Character {
     else {
             current = 0;
     }
+    
+    if(x + 70 < 0 || y> 480)
+    	HealthBar.index=9;
+    
   }
   
   public boolean getVerticalMoving() {
