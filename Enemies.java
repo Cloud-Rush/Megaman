@@ -30,6 +30,7 @@ class Enemies {
 	private double timer3 = 0.0;
 	private double timer4 = 0.0;
 	Rectangle rectangle = new Rectangle(enemyX,enemyY,xWidth,yHeight);
+	boolean alive = true;
 	
 	public Enemies(int type, int x, int y) {
 		
@@ -62,12 +63,25 @@ class Enemies {
 	}
 	
 	public void draw(Graphics g) {
+		
+		
+		if(alive){
+		
 		if (enemyType == 1) {
+			if(enemy1Current == 1){
 			g.drawImage(Enemy1[enemy1Current], enemyX, enemyY, xWidth, yHeight, null);
 			g.setColor(Color.red);
 			rectangle.setLocation(enemyX,enemyY-10);
 			rectangle.resize(xWidth-20, yHeight-20);
 			g.drawRect(enemyX+5, enemyY, xWidth-30, yHeight-30);
+			}
+			else{
+				g.drawImage(Enemy1[enemy1Current], enemyX, enemyY, xWidth, yHeight, null);
+				rectangle.setLocation(-100,-100);
+				rectangle.resize(0, 0);	
+				
+			}
+			
 		}
 		if (enemyType == 2) {
 			g.drawImage(Enemy2, enemyX, enemyY, xWidth, yHeight, null);
@@ -81,9 +95,9 @@ class Enemies {
 			if (enemy3Current == 0) {
 				g.drawImage(Enemy3[enemy3Current], enemyX, enemyY, xWidth, yHeight, null);
 				g.setColor(Color.yellow);
-				rectangle.setLocation(enemyX+5,enemyY+2);
-				rectangle.resize(xWidth-10, yHeight-10);
-				g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
+				rectangle.setLocation(-100,-100);
+				rectangle.resize(0, 0);
+				//g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
 			
 			}
 			else
@@ -97,23 +111,51 @@ class Enemies {
 			if (enemy4Current == 1) {
 				g.drawImage(Enemy4[enemy4Current], enemyX, enemyY - 50, xWidth, yHeight, null);
 				g.setColor(Color.red);
-				rectangle.setLocation(enemyX+5,enemyY-50);
-				rectangle.resize(xWidth-8, yHeight);
-				g.drawRect(enemyX+5, enemyY-50, xWidth-8, yHeight);
+				rectangle.setLocation(-100,-100);
+				rectangle.resize(0, 0);
+				//g.drawRect(enemyX+5, enemyY-50, xWidth-8, yHeight);
 			}
 			else {
+				if(enemy4Current == 3 || enemy4Current == 4){
 				g.drawImage(Enemy4[enemy4Current], enemyX, enemyY, xWidth, yHeight, null);
 				g.setColor(Color.red);
 				rectangle.setLocation(enemyX+5,enemyY+2);
 				rectangle.resize(xWidth-10, yHeight-10);
 				g.drawRect(enemyX+5, enemyY+2, xWidth-10, yHeight-10);
+				}else{
+					g.drawImage(Enemy4[enemy4Current], enemyX, enemyY, xWidth, yHeight, null);
+					rectangle.setLocation(-100,-100);
+					rectangle.resize(0, 0);	
+					
+				}
 			}
 		}
 		
-		
+		} else {
+			
+			rectangle.setLocation(-100,-100);
+		}
 		
 	}
 		
+	public void isHit(){
+		
+		
+		
+		// if(rectangle.intersects()){
+		    alive = false;
+		    
+		// }
+		 
+	}
+	
+	
+	public Rectangle getRectangle(){
+		
+		
+		return rectangle;
+	}
+	
 	public void update(double seconds) {
 		  timer1 += seconds;
 		  timer3 += seconds;
