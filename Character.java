@@ -10,7 +10,8 @@ class Character {
   private static final double ACCELERATION = 450.0;
   private static final double WIDTH = 70.0;
   private static final double HEIGHT = 70.0;
-  private double x, y, dx, dy;
+  private double x, y, dx, dy,dy2;
+ 
 
   /* now we have an array of images */
   private Image [] megaman;
@@ -20,11 +21,13 @@ class Character {
   private Rectangle TempRectangle = new Rectangle();
   private Rectangle OnRectangle = new Rectangle();
   private Rectangle LeftRectangle = new Rectangle();
+  private Rectangle above = new Rectangle();
   private int current;
   private boolean right = true;
   private boolean horizontalMoving = false;
   private boolean verticalMoving = false;
   private boolean shooting = false;
+  boolean under=false;
   private int shootCounter = 0;
   private int index = 0;
 
@@ -117,16 +120,32 @@ class Character {
           MMRectangle.setBounds(((int)x+18), ((int)y+5), 40, 60);
           g.drawRect((int)x+18, (int)y+5, 40, 60);
           
+          under= false;
+          
           for(int i = 0; i < index; i++) {
         	  TempRectangle = Background.image.get(i);
+        	  above.setBounds(MMRectangle.x,MMRectangle.y-3000,40,2975);
+        	  g.drawRect(MMRectangle.x, MMRectangle.y-3000, 40, 2975);
+        	  if(above.intersects(TempRectangle)){
+        		  
+        		  under=true;
+        		  dy2= ((TempRectangle.getY() + TempRectangle.height)-MMRectangle.y)+2;
+        		  System.out.println(dy2);
+        	  }
+        		  
+        	  
         	  if (MMRectangle.intersects(TempRectangle)) {
-        		if (MMRectangle.getY() < TempRectangle.getY()) {
-              		y = TempRectangle.getY() - MMRectangle.height;
-              		groundlevel = (int)y;
-              		OnRectangle = TempRectangle;
-              		LeftRectangle = new Rectangle(0, 0, 0, 0);
-              		Background.intersects=false;
-          		}
+        		  
+        		  
+        		  	
+        			  
+        			if ((MMRectangle.getY()-MMRectangle.height) < TempRectangle.getY()) {
+                  		y = TempRectangle.getY() - MMRectangle.height;
+                  		groundlevel = (int)y;
+                  		OnRectangle = TempRectangle;
+                  		LeftRectangle = new Rectangle(0, 0, 0, 0);
+                  		Background.intersects=false;
+              		}
         		else if (MMRectangle.getX() < TempRectangle.getX()) {
         			 Background.intersects=true;
         			 x = TempRectangle.getX()-MMRectangle.width-11;
@@ -136,9 +155,10 @@ class Character {
         			x = TempRectangle.getX() + TempRectangle.width;
         			//OnRectangle = TempRectangle;
         		}
-        		else if (MMRectangle.getY() < (TempRectangle.getY() + TempRectangle.height)) {
-        			y = TempRectangle.getY() + TempRectangle.height;
-        		}
+        		else if (MMRectangle.getY()+MMRectangle.height > (TempRectangle.getY() + TempRectangle.height)) {
+          			y = TempRectangle.getY() + TempRectangle.height;
+        		  } 
+        		
         	  }
         	  else {
         		  if(MMRectangle.getX() + MMRectangle.width < OnRectangle.getX() || MMRectangle.getX()> (OnRectangle.getX()+OnRectangle.width))  
@@ -154,13 +174,17 @@ class Character {
           
     /* draw megaman on the screen */
           g.drawImage(megaman[current], (int)x, (int)y, 70, 70, null);
-          MMRectangle.setBounds((int)x+18, ((int)y+5), 40, 60);
-          g.setColor(Color.green);
+         // MMRectangle.setBounds((int)x+18, ((int)y+5), 40, 60);
+          //g.setColor(Color.green);
           g.drawRect((int)x+18, (int)y+5, 40, 60);
           if (shooting == true) {
-        	  MMshot.draw(g);
-        	  MMshot.update();
+        	 
+        	  
           }
+          
+          MMshot.draw(g);
+    	  MMshot.update();
+          
   	}
 
   /* stop megaman */
@@ -177,7 +201,7 @@ class Character {
   /* left/up/right/down */
   public void left( ) {horizontalMoving = true; right = false; dx = -SPEED;}
   //public void up( ) {if (y == groundlevel) {verticalMoving = true; dy = -3000;} }
-  public void up( ) {verticalMoving = true; dy = -3000;}
+  public void up( ) {if(!under){verticalMoving = true; dy = -3000;}else{ verticalMoving = true;y = y+dy2;} }
   public void right( ) {horizontalMoving = true; right = true; dx = SPEED;}
   public void down( ) {verticalMoving = true; dy = ACCELERATION;}
   public void shoot( ) {shooting = true; shootCounter++; MMshot.xStart(x + 70.0); MMshot.yStart(y + 20.0);}
@@ -193,12 +217,13 @@ class Character {
     	x += (dx * dt);
     }
     else {
-    	x += (dx * dt) - 7;
+    	x += ((dx) * dt)-6.7;
     }
     y += (dy * dt);
 
     if (Background.scrollingDone == true) {
     	if(x > 1070) x = 1070;
+    	if(x<470) x= 470;
     }
     else {
     	if(x > 1300) x = 1300;
@@ -227,6 +252,8 @@ class Character {
                 current = 1;
         }
       }
+ 
+      
     }
     else {
             current = 0;
@@ -234,6 +261,7 @@ class Character {
     
     if(x + 70 < 0 || y> 480)
     	HealthBar.index=9;
+    
     
   }
   
