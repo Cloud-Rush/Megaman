@@ -33,7 +33,7 @@ class Enemies {
         private double timer1 = 0.0;
         private double timer3 = 0.0;
         private double timer4 = 0.0;
-        Rectangle rectangle = new Rectangle(enemyX,enemyY,xWidth,yHeight);
+        private Rectangle rectangle = new Rectangle(enemyX,enemyY,xWidth,yHeight);
         boolean alive = true;
         private int hits = 0;
         
@@ -169,7 +169,7 @@ class Enemies {
                 
         public void isHit(){
         	// if(rectangle.intersects()){
-        	if (enemyType == 4 && enemy4Current != 0 && enemy4Current != 2 || enemyType == 3)
+        	if ((enemyType == 4 && enemy4Current != 0 && enemy4Current != 2) || enemyType == 3)
         	hits++;
         	
         	if (enemyType == 3 && hits >= 3) {
