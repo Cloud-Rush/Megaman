@@ -130,7 +130,7 @@ class Enemies {
                         if (enemy4Current == 1) {
                         	g.drawImage(Enemy4[enemy4Current], enemyX, enemyY - 50, xWidth, yHeight, null);
                         	g.setColor(Color.red);
-                        	rectangle.setLocation(enemyX+5,enemyY-120);
+                        	rectangle.setLocation(enemyX+5,enemyY-50);
                         	rectangle.resize(xWidth-10, yHeight-10);
 //                        	g.drawRect(enemyX+5, enemyY-50, xWidth-8, yHeight);
                         }
