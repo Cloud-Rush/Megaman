@@ -7,8 +7,6 @@ import java.util.*;
 
 public class HealthBar extends JFrame {
         
-        int height = 0;
-        
         private Image [] healthbar;
         static int index = 0;
         
@@ -29,8 +27,6 @@ public class HealthBar extends JFrame {
                         healthbar = null;
                 }
         }
-        
-        //height = healthbar[0].getHeight(this)/2;
         
         public void draw(Graphics g) {
         	g.drawImage(healthbar[index], 10, 10, 50, 200, null);
