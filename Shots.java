@@ -21,9 +21,9 @@ class Shots {
 	int index = 0;
 	boolean hitsomething = false;
 	private static boolean MMhit = false;
-	Rectangle rectangle = new Rectangle();
-	Rectangle TempRectangle = new Rectangle();
-	Rectangle MMRectangle = new Rectangle();
+	private Rectangle rectangle = new Rectangle();
+	private Rectangle TempRectangle = new Rectangle();
+	private Rectangle MMRectangle = new Rectangle();
 	
 	public Shots(int shotIndicator) {
 		try {
