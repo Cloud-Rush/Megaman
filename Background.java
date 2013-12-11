@@ -145,18 +145,23 @@ public class Background extends JFrame {
 		//screen 2
 		Enemy.add(new Enemies(3, w0 + 500, 340));
 		
+		//screen 3
+		Enemy.add(new Enemies(2, w2 + 2400, 100));
+		Enemy.add(new Enemies(2, w2 + 2100, 200));
+		Enemy.add(new Enemies(2, w2 + 1800, 300));
 		
+		//screen 4
+		Enemy.add(new Enemies(3, w2 + 140, 350));
+		Enemy.add(new Enemies(3, w2 + 240, 218));
 	
 		//screen 5
-		 Enemy.add(new Enemies(3, w3 + 500, 342));
+		 Enemy.add(new Enemies(3, w3 + 500, 350));
 		 
 		//screen 6
 		 Enemy.add(new Enemies(3, w4 + 500, 350));
 		 
 		//screen 7
-		 Enemy.add(new Enemies(2, w2 + 500, 100));
-		 
-		 
+		 Enemy.add(new Enemies(2, w5 + 500, 100));
 		 
 		 //screen8
 		 Enemy.add(new Enemies(3, w6 + 900, 350));
@@ -259,13 +264,18 @@ public class Background extends JFrame {
 					Enemy.get(1).scroll(15);
 					Enemy.get(2).scroll(5);
 					Enemy.get(3).scroll(5);
-					Enemy.get(4).scroll(5);
-                    Enemy.get(5).scroll(5);
-                    Enemy.get(6).scroll(15);
-                    Enemy.get(7).scroll(5);
-                    Enemy.get(8).scroll(5);
-                    Enemy.get(9).scroll(5);
+					Enemy.get(4).scroll(15);
+					Enemy.get(5).scroll(15);
+					Enemy.get(6).scroll(15);
+					Enemy.get(7).scroll(5);
+					Enemy.get(8).scroll(5);
+					Enemy.get(9).scroll(5);
                     Enemy.get(10).scroll(5);
+                    Enemy.get(11).scroll(15);
+                    Enemy.get(12).scroll(5);
+                    Enemy.get(13).scroll(5);
+                    Enemy.get(14).scroll(5);
+                    Enemy.get(15).scroll(5);
 				
 			}
 			else {
@@ -337,6 +347,9 @@ public class Background extends JFrame {
 		image.get(15).setBounds(offscreenx2 + 1278, 376, 280, 115);
 		image.get(16).setBounds(offscreenx2 + 1470, 310, 180, 308);
 		image.get(17).setBounds(offscreenx2 + 1568, 242, 100, 325);
+		Enemy.get(4).draw(g);
+		Enemy.get(5).draw(g);
+		Enemy.get(6).draw(g);
 		
 		/*
 		//Collision Detection Rectangles for BG Image 3
@@ -374,6 +387,8 @@ public class Background extends JFrame {
 		image.get(27).setBounds(offscreenx3 + 1035, 339, 97, 33);
 		image.get(28).setBounds(offscreenx3 + 1082, 240, 49, 33);
 		image.get(29).setBounds(offscreenx3 + 1130, 108, 96, 350);
+		Enemy.get(7).draw(g);
+		Enemy.get(8).draw(g);
 		
 		
 		/*
@@ -402,7 +417,7 @@ public class Background extends JFrame {
 		image.get(30).setBounds(offscreenx4 + 62, 376, 1655, 104);
 		image.get(31).setBounds(offscreenx4 + 1532, 310, 175, 170);
 		image.get(32).setBounds(offscreenx4 + 1628, 242, 98, 238);
-		Enemy.get(4).draw(g);
+		Enemy.get(9).draw(g);
 		
 		
 		/*
@@ -430,7 +445,7 @@ public class Background extends JFrame {
 		image.get(40).setBounds(offscreenx5 + 985, 310, 180, 308);
 		image.get(41).setBounds(offscreenx5 + 1083, 242, 97, 325);
 		image.get(42).setBounds(offscreenx5 + 1273, 376, 780, 115);
-		Enemy.get(5).draw(g);
+		Enemy.get(10).draw(g);
 	
 		
 		/*
@@ -460,7 +475,7 @@ public class Background extends JFrame {
 		image.get(46).setBounds(offscreenx6 + 332, 115, 386, 33);
 		image.get(47).setBounds(offscreenx6 + 92, 148, 94, 33);
 		image.get(48).setBounds(offscreenx6 - 122, 377, width6, 200);
-		Enemy.get(6).draw(g);
+		Enemy.get(11).draw(g);
 		
 		
 		
@@ -489,8 +504,8 @@ public class Background extends JFrame {
 		image.get(52).setBounds(offscreenx7+40, 142, 49, 33);
 		image.get(53).setBounds(offscreenx7+138, 372, 100, 200);
 		image.get(54).setBounds(offscreenx7+765, 372, width7, 200);
-		Enemy.get(7).draw(g);
-		Enemy.get(8).draw(g);
+		Enemy.get(12).draw(g);
+		Enemy.get(13).draw(g);
 		
 		/*
 		//Collision Detection Rectangles for BG Image 8
@@ -509,7 +524,7 @@ public class Background extends JFrame {
 	
 		//Collision Detection Rectangles for BG Image 9
 		image.get(55).setBounds(offscreenx8, 372, width8, 200);
-		Enemy.get(9).draw(g);
+		Enemy.get(14).draw(g);
 		
 		/*
 		//Collision Detection Rectangles for BG Image 9
@@ -552,8 +567,8 @@ public class Background extends JFrame {
 		//Collision Detection Rectangles for BG Image 12
 		image.get(58).setBounds(offscreenx11, 402, 1300, 50);
 		if (scrollingDone == true)
-			Enemy.get(10).draw(g);
-		if (!Enemy.get(10).isAlive()) {
+			Enemy.get(15).draw(g);
+		if (!Enemy.get(15).isAlive()) {
 			Font f = new Font("Arial", Font.BOLD, 150);
 			g.setFont(f);
 			g.drawString("Congratulations!", 70, 200);
