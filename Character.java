@@ -31,7 +31,7 @@ class Character {
   private boolean shootFrame = false;
   private boolean under = false;
   private boolean wasHit = false;
-  static boolean winner = false;
+  private static boolean winner = false;
   private int shootCounter = 0;
   private int backgroundIndex = 0;
   private int enemyIndex = 0;
