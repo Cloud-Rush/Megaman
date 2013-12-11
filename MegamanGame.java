@@ -6,7 +6,7 @@ import javax.swing.*;
 
 public class MegamanGame {
 	
-	static String highscore;
+	public static String highscore;
 	
 	public static void main(String args[]) {
 		// create and set up the window.
@@ -26,7 +26,7 @@ public class MegamanGame {
 		JOptionPane.showMessageDialog(frame, "Controls are: \n" + "A & D to move left & right\n" + "W to jump\n" + "Space to shoot\n" + "High score is " + highscore);
 		
 		// add the GameWorld component
-		GameWorld.bgMusic.play();
+		GameWorld.bgMusic.gameMusic();
 		GameWorld g = new GameWorld( );
 		frame.add(g);
 		frame.addKeyListener(g);
