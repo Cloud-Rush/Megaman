@@ -43,7 +43,7 @@ class Character {
   /* time since last flip */
   private double timer = 0.0;
   private double shotTimer = 0.0;
-  int groundlevel = 600;
+  private int groundlevel = 600;
 
   public Character( ) {
     /* load all the images */
@@ -65,7 +65,7 @@ class Character {
       megaman1[11] = ImageIO.read(new File("MMFallRT.png"));
       megaman1[12] = ImageIO.read(new File("MMDamaged1R.png"));
       megaman1[13] = ImageIO.read(new File("MMDamaged2.png"));
-      megaman1[14] = ImageIO.read(new File("MMDeadL.png"));
+      megaman1[14] = ImageIO.read(new File("MMDeadR.png"));
       megaman2[0] = ImageIO.read(new File("MMStandLT.png"));
       megaman2[1] = ImageIO.read(new File("MMRun1LT.png"));
       megaman2[2] = ImageIO.read(new File("MMRun2LT.png"));
@@ -80,10 +80,10 @@ class Character {
       megaman2[11] = ImageIO.read(new File("MMFallLT.png"));
       megaman2[12] = ImageIO.read(new File("MMDamaged1L.png"));
       megaman2[13] = ImageIO.read(new File("MMDamaged2.png"));
-      megaman2[14] = ImageIO.read(new File("MMDeadL.png"));
+      megaman2[14] = ImageIO.read(new File("MMDeadR.png"));
       MMshot[0] = new Shots(0);
-      MMshot[1] = new Shots(0);
-      MMshot[2] = new Shots(0);
+      MMshot[1] = new Shots(1);
+      MMshot[2] = new Shots(2);
     } catch(Exception e) {
       megaman = null;
     }
