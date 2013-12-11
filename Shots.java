@@ -8,7 +8,7 @@ import java.util.*;
 class Shots {
 	private Image [] Bullets;
 	private static final double PLAYER_SHOT_SPEED = 50.0;
-	private static final double ENEMY_SHOT_SPEED = 50.0;
+	private static final double ENEMY_SHOT_SPEED = 25.0;
 	private static final int PLAYER_BULLET_WIDTH = 30;
 	private static final int PLAYER_BULLET_HEIGHT = 30;
 	private static final int ENEMY_BULLET_WIDTH = 60;
