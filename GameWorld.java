@@ -44,7 +44,7 @@ class GameWorld extends JComponent implements KeyListener {
     background = new Background();
     
     try {
-    	megamanDead = ImageIO.read(new File("MMDead.png"));
+    	megamanDead = ImageIO.read(new File("MMDeadL.png"));
     } catch (Exception e) {
     	megamanDead = null;
     }
