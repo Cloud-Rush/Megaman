@@ -247,6 +247,7 @@ class Character {
   public void down( ) {verticalMoving = true; dy = ACCELERATION;}
   public void up( ) {
 	  if (y == groundlevel && current != 14) {
+	  //if (current != 14) {
 		  if(!under) {
 			  verticalMoving = true; 
 			  dy = -3000;
