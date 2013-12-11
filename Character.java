@@ -29,8 +29,8 @@ class Character {
   private boolean horizontalMoving = false;
   private boolean verticalMoving = false;
   private boolean shootFrame = false;
-  boolean under = false;
-  boolean wasHit = false;
+  private boolean under = false;
+  private boolean wasHit = false;
   static boolean winner = false;
   private int shootCounter = 0;
   private int backgroundIndex = 0;
