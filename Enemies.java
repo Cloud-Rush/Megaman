@@ -34,7 +34,7 @@ class Enemies {
         private double timer3 = 0.0;
         private double timer4 = 0.0;
         private Rectangle rectangle = new Rectangle(enemyX,enemyY,xWidth,yHeight);
-        boolean alive = true;
+        public boolean alive = true;
         private int hits = 0;
         
         public Enemies(int type, int x, int y) {
