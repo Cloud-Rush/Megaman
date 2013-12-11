@@ -18,8 +18,8 @@ class Shots {
 	private int dx = 0;
 	private int shotIndicator = 0;
 	
-	int index = 0;
-	boolean hitsomething = false;
+	private int index = 0;
+	private boolean hitsomething = false;
 	private static boolean MMhit = false;
 	private Rectangle rectangle = new Rectangle();
 	private Rectangle TempRectangle = new Rectangle();
