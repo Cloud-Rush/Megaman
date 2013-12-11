@@ -33,6 +33,10 @@ class Sound {
     }
   }
   
+  public void gameMusic( ) {
+	  clip.loop(Clip.LOOP_CONTINUOUSLY);
+  }
+  
   public void stop( ) {
 	  clip.stop( );
   }
