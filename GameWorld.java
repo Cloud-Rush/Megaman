@@ -14,9 +14,9 @@ import javax.swing.JOptionPane;
 
 class GameWorld extends JComponent implements KeyListener {
   private Character megaman;
-  Background background;
-  HealthBar healthbar;
-  Enemies enemies;
+  private Background background;
+  private HealthBar healthbar;
+  private Enemies enemies;
   private long elapsed;
   private Image megamanDead;
   //initialize and try opening the stage music.
@@ -44,7 +44,7 @@ class GameWorld extends JComponent implements KeyListener {
     background = new Background();
     
     try {
-    	megamanDead = ImageIO.read(new File("MMDeadL.png"));
+    	megamanDead = ImageIO.read(new File("MMDeadR.png"));
     } catch (Exception e) {
     	megamanDead = null;
     }
@@ -107,6 +107,7 @@ class GameWorld extends JComponent implements KeyListener {
 		  death.play();
 		  try {
 		  bgMusic.stop( );
+		  bossMusic.stop( );
 		  } catch (Exception e) {
 			  //unused
 		  }
