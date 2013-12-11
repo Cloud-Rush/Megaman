@@ -14,71 +14,70 @@ public class Background extends JFrame {
 	static ArrayList<Rectangle> image = new ArrayList<Rectangle>();
 	static ArrayList<Enemies> Enemy = new ArrayList<Enemies>();
 
-	int screenWidth = 1320;
-	int screenHeight = 480;
+	private int screenWidth = 1320;
+	private int screenHeight = 480;
 	//to scroll background
-	int tilesx;
-	int tilesy;
+	private int tilesx;
+	private int tilesy;
 	//how much screen moves by
-	int offsetx=0;
-	int offsety =0;
+	private int offsetx=0;
+	private int offsety =0;
 	//x locations of onscreen and offscreen images
-	int onscreenx;
-	int offscreenx;
-	int offscreenx2;
-	int offscreenx3;
-	int offscreenx4;
-	int offscreenx5;
-	int offscreenx6;
-	int offscreenx7;
-	int offscreenx8;
-	int offscreenx9;
-	int offscreenx10;
-	int offscreenx11;
-	static boolean scrollingDone = false;
-	static boolean intersects = false;
+	private int onscreenx;
+	private int offscreenx;
+	private int offscreenx2;
+	private int offscreenx3;
+	private int offscreenx4;
+	private int offscreenx5;
+	private int offscreenx6;
+	private int offscreenx7;
+	private int offscreenx8;
+	private int offscreenx9;
+	private int offscreenx10;
+	private int offscreenx11;
+	public static boolean scrollingDone = false;
+	public static boolean intersects = false;
 	
-	  private static final double FLIP_TIME = 0.125;
-	  private double timer = 0.0;
+	private static final double FLIP_TIME = 0.125;
+	private double timer = 0.0;
         
 	//background images
-	Image bg[]= new Image[12];
+	private Image bg[]= new Image[12];
 	private Image offscreen;
 	private Graphics goff;
 	// width and height of image
         
-	int height= screenHeight;
-	int height10;
+	private int height= screenHeight;
+	private int height10;
         
-	int width0=screenWidth;
-	int width1=screenWidth;
-	int width2=screenWidth;
-	int width3=screenWidth;
-	int width4=screenWidth;
-	int width5=screenWidth;
-	int width6=screenWidth;
-	int width7=screenWidth;
-	int width8=screenWidth;
-	int width9=screenWidth;
-	int width10=screenWidth;
-	int width11=screenWidth;
+	private int width0=screenWidth;
+	private int width1=screenWidth;
+	private int width2=screenWidth;
+	private int width3=screenWidth;
+	private int width4=screenWidth;
+	private int width5=screenWidth;
+	private int width6=screenWidth;
+	private int width7=screenWidth;
+	private int width8=screenWidth;
+	private int width9=screenWidth;
+	private int width10=screenWidth;
+	private int width11=screenWidth;
       
+	private int w0=screenWidth;
+	private int w1=screenWidth;
+	private int w2=screenWidth;
+	private int w3=screenWidth;
+	private int w4=screenWidth;
+	private int w5=screenWidth;
+	private int w6=screenWidth;
+	private int w7=screenWidth;
+	private int w8=screenWidth;
+	private int w9=screenWidth;
+	private int w10=screenWidth;
+	private int w11=screenWidth;
 	
-	int w0=screenWidth;
-	int w1=screenWidth;
-	int w2=screenWidth;
-	int w3=screenWidth;
-	int w4=screenWidth;
-	int w5=screenWidth;
-	int w6=screenWidth;
-	int w7=screenWidth;
-	int w8=screenWidth;
-	int w9=screenWidth;
-	int w10=screenWidth;
-	int w11=screenWidth;
-	
-	static int score = 0;
-	String scoreString;
+	public static int score = 0;
+	public String scoreString;
         
 	public Background() {
 		try {
@@ -281,7 +280,7 @@ public class Background extends JFrame {
 			else {
 				scrollingDone = true;
 				GameWorld.bgMusic.stop();
-				GameWorld.bossMusic.play();
+				GameWorld.bossMusic.gameMusic();
 			}
 		}
 		}
