@@ -8,7 +8,7 @@ import java.util.*;
 public class HealthBar extends JFrame {
         
         private Image [] healthbar;
-        static int index = 0;
+        public static int index = 0;
         
         public HealthBar( ) {
                 try {
